@@ -150,43 +150,67 @@
       .catch(() => {
         document.getElementById('posts').innerHTML = '<div style="color:#f55;font-weight:bold">Chyba při načítání dat</div>';
       });
+function extractPostDate(text) {
+  const months = [
+    "ledna", "února", "března", "dubna", "května", "června",
+    "července", "srpna", "září", "října", "listopadu", "prosince"
+  ];
+  const re = /(\d{1,2})\.\s*(ledna|února|března|dubna|května|června|července|srpna|září|října|listopadu|prosince)\s*v\s*(\d{1,2}:\d{2})/i;
+  const match = text.match(re);
+  if (!match) return null;
+  const day = parseInt(match[1]);
+  const month = months.indexOf(match[2].toLowerCase());
+  const time = match[3];
+  if (month === -1) return null;
+  const year = (new Date()).getFullYear();
+  const dateStr = `${year}-${(month+1).toString().padStart(2,"0")}-${day.toString().padStart(2,"0")}T${time}:00`;
+  return new Date(dateStr);
+}
 
-    function renderPosts(data) {
-      const container = document.getElementById('posts');
-      if (!data) {
-        container.innerHTML = '<div style="color:#999">Žádné příspěvky...</div>';
-        return;
-      }
-      // Seřadit nejnovější nahoře (podle time)
-      const items = Object.values(data)
-        .sort((a, b) => (b.time || '').localeCompare(a.time || ''));
-      container.innerHTML = '';
-      for (const post of items) {
-        container.innerHTML += `
-          <div class="card">
-            <div class="card-header">
-              <span class="material-icons" title="Profil">person</span>
-              ${
-                post.userUrl
-                  ? `<a href="${post.userUrl}" target="_blank" class="user-link" title="Profil na Facebooku">${post.author || "Neznámý"}</a>`
-                  : `<span class="user-link" style="color:#aaa;pointer-events:none;">${post.author || "Neznámý"}</span>`
-              }
-              <span class="date"><span class="material-icons" style="font-size:1em;vertical-align:-2px;">schedule</span>
-                ${post.time ? (new Date(post.time)).toLocaleString('cs-CZ') : ''}
-              </span>
-              <a href="${post.url}" target="_blank" class="post-link" title="Otevřít příspěvek">
-                <span class="material-icons">open_in_new</span>
-              </a>
-            </div>
-            <div class="card-body">${post.text || ""}</div>
-            <div class="card-footer">
-              <input type="text" placeholder="Komentář..." class="comment-input" disabled>
-              <button class="add-comment-btn" disabled>Odeslat</button>
-            </div>
-          </div>
-        `;
-      }
-    }
+function renderPosts(data) {
+  const container = document.getElementById('posts');
+  if (!data) {
+    container.innerHTML = '<div style="color:#999">Žádné příspěvky...</div>';
+    return;
+  }
+  const items = Object.values(data)
+    .sort((a, b) => {
+      const d1 = extractPostDate(a.text || "") || new Date(0);
+      const d2 = extractPostDate(b.text || "") || new Date(0);
+      return d2 - d1;
+    });
+  container.innerHTML = '';
+  for (const post of items) {
+    let realDate = extractPostDate(post.text || "");
+    let showDate = realDate
+      ? realDate.toLocaleString('cs-CZ', { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" })
+      : "";
+    container.innerHTML += `
+      <div class="card">
+        <div class="card-header">
+          <span class="material-icons" title="Profil">person</span>
+          ${
+            post.userUrl
+              ? `<a href="${post.userUrl}" target="_blank" class="user-link" title="Profil na Facebooku">${post.author || "Neznámý"}</a>`
+              : `<span class="user-link" style="color:#aaa;pointer-events:none;">${post.author || "Neznámý"}</span>`
+          }
+          <span class="date"><span class="material-icons" style="font-size:1em;vertical-align:-2px;">schedule</span>
+            ${showDate}
+          </span>
+          <a href="${post.url}" target="_blank" class="post-link" title="Otevřít příspěvek">
+            <span class="material-icons">open_in_new</span>
+          </a>
+        </div>
+        <div class="card-body">${post.text || ""}</div>
+        <div class="card-footer">
+          <input type="text" placeholder="Komentář..." class="comment-input" disabled>
+          <button class="add-comment-btn" disabled>Odeslat</button>
+        </div>
+      </div>
+    `;
+  }
+}
+
   </script>
 </body>
 </html>
