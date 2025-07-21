@@ -2,226 +2,191 @@
 <html lang="cs">
 <head>
   <meta charset="UTF-8">
-  <title>Facebook Poptávky (Firebase)</title>
-  <script type="module" src="https://unpkg.com/@material/web/all.js?module"></script>
+  <title>📋 Facebook Poptávky</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <style>
     body {
-      font-family: Roboto, Arial, sans-serif;
-      background: #f5f7fa;
+      background: #f5f6fa;
+      font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
       margin: 0;
     }
-    .container {
-      max-width: 1200px;
-      margin: 2rem auto;
-      padding: 1rem;
-    }
-    h1 {
-      text-align: center;
+    .main-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      font-weight: bold;
+      margin-top: 2rem;
+      margin-bottom: 2.5rem;
       color: #222;
-      margin-bottom: 2rem;
-      font-size: 2.3rem;
+      gap: 0.7rem;
     }
-    .grid {
+    #posts {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(410px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(370px, 1fr));
       gap: 2rem;
+      margin: 0 auto 3rem auto;
+      max-width: 1700px;
+      padding: 0 2vw;
     }
-    mwc-card {
-      box-shadow: 0 2px 10px #0001;
+    .card {
+      background: #fff;
       border-radius: 20px;
-      min-height: 180px;
-      padding: 0;
+      box-shadow: 0 4px 24px 0 #0001;
+      padding: 1.4rem 1.6rem 1.2rem 1.6rem;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      min-height: 170px;
+      transition: box-shadow 0.18s;
+      position: relative;
+      overflow: hidden;
     }
-    .meta {
+    .card:hover {
+      box-shadow: 0 6px 36px 0 #0002;
+    }
+    .card-header {
+      font-size: 1.13rem;
+      font-weight: 500;
       display: flex;
       align-items: center;
-      gap: 1em;
-      color: #666;
-      font-size: 1.02rem;
-      margin-bottom: 0.4em;
+      margin-bottom: 0.3rem;
+      gap: 0.7em;
+      flex-wrap: wrap;
     }
-    .meta .material-icons { font-size: 1.2em; }
+    .user-link {
+      color: #1976d2;
+      text-decoration: none;
+      font-weight: 600;
+      margin-right: 1rem;
+    }
+    .user-link:hover {
+      text-decoration: underline;
+    }
+    .date {
+      color: #777;
+      font-size: 0.98em;
+      margin-left: 0.3em;
+      margin-right: 0.6em;
+      display: flex;
+      align-items: center;
+      gap: 0.2em;
+    }
+    .post-link {
+      margin-left: auto;
+      color: #1976d2;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      font-size: 1.18em;
+    }
+    .post-link:hover {
+      color: #145ca7;
+    }
     .card-body {
-      padding: 1.3em 1.6em 0 1.6em;
-      flex: 1;
-    }
-    .text {
-      font-size: 1.13em;
-      margin-bottom: 1.2em;
-      white-space: pre-wrap;
-      color: #222;
+      margin: 0.6rem 0 1.1rem 0;
+      font-size: 1.12rem;
+      color: #1a232e;
+      word-break: break-word;
+      min-height: 50px;
+      flex: 1 1 auto;
+      white-space: pre-line;
     }
     .card-footer {
+      margin-top: auto;
       display: flex;
+      gap: 0.4rem;
       align-items: center;
-      justify-content: space-between;
-      padding: 0.3em 1.2em 1.1em 1.2em;
-      background: transparent;
-      border-top: 1px solid #f0f0f0;
-      gap: 0.8em;
+      padding-top: 0.6rem;
+      border-top: 1px solid #f2f2f2;
     }
-    .card-actions {
-      display: flex;
-      gap: 0.4em;
-      align-items: center;
-    }
-    .comment-area {
-      display: flex;
-      align-items: flex-end;
-      gap: 0.4em;
-      margin-top: 0.8em;
-    }
-    .comment-area mwc-textfield {
+    .comment-input {
       flex: 1;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 0.43rem 0.85rem;
+      font-size: 1.03rem;
+      transition: border 0.2s;
+      outline: none;
     }
-    .comments-list {
-      margin: 0.7em 0 0.2em 0;
-      color: #0a539a;
-      font-size: .99em;
-      background: #f5fafd;
-      border-radius: 9px;
-      padding: 0.4em 0.7em;
+    .comment-input:focus {
+      border: 1.5px solid #1976d2;
     }
-    .comments-list .author {
-      color: #1976d2;
+    .add-comment-btn {
+      border: none;
+      background: #1976d2;
+      color: #fff;
+      padding: 0.48rem 1.1rem;
+      border-radius: 8px;
       font-weight: bold;
-      margin-right: 0.3em;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.16s;
+    }
+    .add-comment-btn:hover {
+      background: #1357a6;
+    }
+    @media (max-width: 800px) {
+      #posts { grid-template-columns: 1fr; }
+      .main-title { font-size: 1.45rem; }
+      .card { padding: 1.15rem 0.8rem 1rem 0.9rem; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>📝 Facebook Poptávky</h1>
-    <div id="root" class="grid"></div>
+  <div class="main-title">
+    <span class="material-icons" style="font-size:2.5rem; color:#e96458;">edit_note</span>
+    Facebook Poptávky
   </div>
-  <script type="module">
-    // Firebase endpoint (poptávky)
+  <div id="posts">Načítám...</div>
+  <script>
+    // Zde nastav správně URL na data z Firebase:
     const FIREBASE_URL = "https://poptavky-b6fa1-default-rtdb.europe-west1.firebasedatabase.app/poptavky.json";
-    const FIREBASE_COMMENTS = "https://poptavky-b6fa1-default-rtdb.europe-west1.firebasedatabase.app/komentare";
 
-    function escapeHTML(str) {
-      return (str || "").replace(/[&<>"']/g, tag => ({
-        '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
-      }[tag]));
-    }
-    function formatDate(dateStr) {
-      if (!dateStr) return "";
-      const d = new Date(dateStr);
-      return d.toLocaleString('cs-CZ', {
-        year: 'numeric', month: 'short', day: 'numeric',
-        hour: '2-digit', minute: '2-digit'
+    fetch(FIREBASE_URL)
+      .then(resp => resp.json())
+      .then(data => renderPosts(data))
+      .catch(() => {
+        document.getElementById('posts').innerHTML = '<div style="color:#f55;font-weight:bold">Chyba při načítání dat</div>';
       });
-    }
-    function makeUserLink(name, url) {
-      if (!url) return escapeHTML(name);
-      return `<a href="${url}" target="_blank" rel="noopener" style="color:#1976d2;text-decoration:none;font-weight:500">${escapeHTML(name)}</a>`;
-    }
-    // --- načte komentáře ke konkrétnímu příspěvku (podle jeho URL hash) ---
-    async function fetchComments(postUrl) {
-      const hash = btoa(postUrl || "").replace(/=+$/,'');
-      const res = await fetch(`${FIREBASE_COMMENTS}/${hash}.json`);
-      if (!res.ok) return [];
-      const data = await res.json();
-      if (!data) return [];
-      // Pole: [{author, text, time}]
-      return Object.values(data).sort((a,b)=> (a.time||"").localeCompare(b.time||""));
-    }
-    // --- uloží komentář k příspěvku ---
-    async function postComment(postUrl, author, text) {
-      const hash = btoa(postUrl || "").replace(/=+$/,'');
-      const item = {
-        author, text, time: new Date().toISOString()
-      };
-      await fetch(`${FIREBASE_COMMENTS}/${hash}.json`, {
-        method: "POST",
-        headers: {"Content-Type":"application/json"},
-        body: JSON.stringify(item)
-      });
-    }
 
-    // Načte data a vygeneruje grid
-    async function loadData() {
-      const root = document.getElementById('root');
-      root.innerHTML = '<mwc-circular-progress indeterminate></mwc-circular-progress>';
-
-      try {
-        const res = await fetch(FIREBASE_URL);
-        const data = await res.json();
-        if (!data) {
-          root.innerHTML = '<p>Žádné záznamy</p>';
-          return;
-        }
-        // Nejnovější nahoře
-        const items = Object.entries(data).map(([id, v]) => ({id, ...v}))
-          .sort((a, b) => (b.time || '').localeCompare(a.time || ''));
-
-        root.innerHTML = items.map(item => `
-          <mwc-card>
-            <div class="card-body">
-              <div class="meta">
-                <span class="material-icons" style="color:#1976d2;">person</span>
-                <span>${makeUserLink(item.author || "Neznámý", item.userUrl)}</span>
-                <span class="material-icons" style="color:#666;margin-left:10px;">schedule</span>
-                <span>${formatDate(item.time)}</span>
-                ${item.url ? `<a href="${item.url}" target="_blank" rel="noopener" style="margin-left:auto;" title="Otevřít příspěvek">
-                  <span class="material-icons" style="color:#0079c4;vertical-align:middle;font-size:1.4em;">open_in_new</span>
-                </a>` : ""}
-              </div>
-              <div class="text">${escapeHTML(item.text || "")}</div>
-              <div class="comments-list" id="cmtlist-${item.id}" style="display:none"></div>
-              <div class="comment-area">
-                <mwc-textfield id="cmtinp-${item.id}" label="Přidat komentář" outlined dense></mwc-textfield>
-                <mwc-button id="cmtbtn-${item.id}" icon="send" label="Odeslat" dense></mwc-button>
-                <mwc-button id="showcmt-${item.id}" icon="forum" label="Zobrazit" dense></mwc-button>
-              </div>
-            </div>
-            <div class="card-footer"></div>
-          </mwc-card>
-        `).join('');
-
-        // Po renderu, napoj události na komentáře
-        for (const item of items) {
-          // Přidat komentář
-          document.getElementById(`cmtbtn-${item.id}`).onclick = async () => {
-            const inp = document.getElementById(`cmtinp-${item.id}`);
-            const txt = inp.value.trim();
-            if (!txt) return inp.focus();
-            let author = prompt("Jméno autora komentáře:");
-            if (!author) author = "Anonym";
-            await postComment(item.url, author, txt);
-            inp.value = "";
-            showComments(item.id, item.url);
-          };
-          // Zobrazit komentáře
-          document.getElementById(`showcmt-${item.id}`).onclick = () => showComments(item.id, item.url);
-        }
-      } catch (e) {
-        root.innerHTML = `<p style="color:crimson">Chyba načítání dat</p>`;
-      }
-    }
-
-    // Funkce na zobrazení komentářů
-    async function showComments(id, url) {
-      const el = document.getElementById(`cmtlist-${id}`);
-      el.innerHTML = "<span style='color:#1976d2'>Načítám komentáře...</span>";
-      el.style.display = "block";
-      const comments = await fetchComments(url);
-      if (!comments.length) {
-        el.innerHTML = "<span style='color:#888'>Žádné komentáře</span>";
+    function renderPosts(data) {
+      const container = document.getElementById('posts');
+      if (!data) {
+        container.innerHTML = '<div style="color:#999">Žádné příspěvky...</div>';
         return;
       }
-      el.innerHTML = comments.map(cmt => `
-        <div><span class="author">${escapeHTML(cmt.author)}:</span> ${escapeHTML(cmt.text)}
-        <span style="color:#888;font-size:.93em;margin-left:8px">${formatDate(cmt.time)}</span></div>
-      `).join('');
+      // Seřadit nejnovější nahoře (podle time)
+      const items = Object.values(data)
+        .sort((a, b) => (b.time || '').localeCompare(a.time || ''));
+      container.innerHTML = '';
+      for (const post of items) {
+        container.innerHTML += `
+          <div class="card">
+            <div class="card-header">
+              <span class="material-icons" title="Profil">person</span>
+              ${
+                post.userUrl
+                  ? `<a href="${post.userUrl}" target="_blank" class="user-link" title="Profil na Facebooku">${post.author || "Neznámý"}</a>`
+                  : `<span class="user-link" style="color:#aaa;pointer-events:none;">${post.author || "Neznámý"}</span>`
+              }
+              <span class="date"><span class="material-icons" style="font-size:1em;vertical-align:-2px;">schedule</span>
+                ${post.time ? (new Date(post.time)).toLocaleString('cs-CZ') : ''}
+              </span>
+              <a href="${post.url}" target="_blank" class="post-link" title="Otevřít příspěvek">
+                <span class="material-icons">open_in_new</span>
+              </a>
+            </div>
+            <div class="card-body">${post.text || ""}</div>
+            <div class="card-footer">
+              <input type="text" placeholder="Komentář..." class="comment-input" disabled>
+              <button class="add-comment-btn" disabled>Odeslat</button>
+            </div>
+          </div>
+        `;
+      }
     }
-
-    loadData();
-    setInterval(loadData, 60000);
   </script>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </body>
 </html>
