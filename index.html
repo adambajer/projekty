@@ -38,11 +38,35 @@
     <span class="material-icons" style="font-size:2.5rem; color:#e96458;">edit_note</span>
     Facebook Poptávky
   </div>
+  <div id="run-log" style="margin:0 auto 2rem auto; max-width:900px; color:#555;"></div>
+
   <div id="posts">Načítám...</div>
   <script>
     // URL na data z Firebase:
     const FIREBASE_URL = "https://poptavky-b6fa1-default-rtdb.europe-west1.firebasedatabase.app/poptavky.json";
     // Komentáře ukládáme do /poptavky/{postId}/comments.json
+function fetchRunLog() {
+  fetch("https://poptavky-b6fa1-default-rtdb.europe-west1.firebasedatabase.app/runs.json")
+    .then(r=>r.json())
+    .then(data => {
+      if (!data) return;
+      let arr = Object.values(data).sort((a, b) => new Date(b.started) - new Date(a.started)).slice(0,10);
+      let html = "<b>Poslední běhy:</b><br><table style='width:100%;font-size:0.97em;margin-top:7px;'><tr><th>Začátek</th><th>Konec</th><th>Doba</th><th>Zpracováno</th><th>Nové</th></tr>";
+      for (const run of arr) {
+        html += `<tr>
+          <td>${new Date(run.started).toLocaleString('cs-CZ')}</td>
+          <td>${new Date(run.finished).toLocaleString('cs-CZ')}</td>
+          <td>${run.duration_sec}s</td>
+          <td>${run.total}</td>
+          <td>${run.saved}</td>
+        </tr>`;
+      }
+      html += "</table>";
+      document.getElementById("run-log").innerHTML = html;
+    });
+}
+fetchRunLog();
+setInterval(fetchRunLog, 45000); // každých 45s
 
     function extractPostDate(text) {
       const months = ["ledna","února","března","dubna","května","června","července","srpna","září","října","listopadu","prosince"];
