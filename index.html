@@ -6,31 +6,165 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <style>
-    body { background: #f5f6fa; font-family: 'Roboto', 'Segoe UI', Arial, sans-serif; margin: 0; }
-    .main-title { display: flex; align-items: center; justify-content: center; font-size: 2.2rem; font-weight: bold; margin-top: 2rem; margin-bottom: 2.5rem; color: #222; gap: 0.7rem;}
-    #posts { display: grid; grid-template-columns: repeat(auto-fit, minmax(370px, 1fr)); gap: 2rem; margin: 0 auto 3rem auto; max-width: 1700px; padding: 0 2vw;}
-    .card { background: #fff; border-radius: 20px; box-shadow: 0 4px 24px 0 #0001; padding: 1.4rem 1.6rem 1.2rem 1.6rem; display: flex; flex-direction: column; min-height: 170px; transition: box-shadow 0.18s; position: relative; overflow: hidden; }
-    .card:hover { box-shadow: 0 6px 36px 0 #0002; }
-    .card-header { font-size: 1.13rem; font-weight: 500; display: flex; align-items: center; margin-bottom: 0.3rem; gap: 0.7em; flex-wrap: wrap; }
-    .user-link { color: #1976d2; text-decoration: none; font-weight: 600; margin-right: 1rem;}
-    .user-link:hover { text-decoration: underline; }
-    .date { color: #777; font-size: 0.98em; margin-left: 0.3em; margin-right: 0.6em; display: flex; align-items: center; gap: 0.2em;}
-    .post-link { margin-left: auto; color: #1976d2; text-decoration: none; display: flex; align-items: center; font-size: 1.18em;}
-    .post-link:hover { color: #145ca7; }
-    .card-body { margin: 0.6rem 0 1.1rem 0; font-size: 1.12rem; color: #1a232e; word-break: break-word; min-height: 50px; flex: 1 1 auto; white-space: pre-line; }
-    .card-footer { margin-top: auto; display: flex; gap: 0.4rem; align-items: center; padding-top: 0.6rem; border-top: 1px solid #f2f2f2; }
-    .comment-input { flex: 1; border: 1px solid #ddd; border-radius: 8px; padding: 0.43rem 0.85rem; font-size: 1.03rem; transition: border 0.2s; outline: none;}
-    .comment-input:focus { border: 1.5px solid #1976d2; }
-    .add-comment-btn { border: none; background: #1976d2; color: #fff; padding: 0.48rem 1.1rem; border-radius: 8px; font-weight: bold; font-size: 1rem; cursor: pointer; transition: background 0.16s;}
-    .add-comment-btn:hover { background: #1357a6;}
-    .comments-list { margin-top: 0.6rem; padding-left: 0.4rem; }
-    .comment-item { color: #444; background: #f8fafc; border-radius: 9px; margin-bottom: 5px; padding: 0.35em 0.8em; font-size: 0.98em; }
-    .comment-item .comment-date { color: #aaa; font-size: 0.9em; margin-left: 0.7em;}
-    @media (max-width: 800px) {
-      #posts { grid-template-columns: 1fr; }
-      .main-title { font-size: 1.45rem; }
-      .card { padding: 1.15rem 0.8rem 1rem 0.9rem; }
-    }
+:root {
+  --primary: #1976d2;
+  --primary-dark: #1254a0;
+}
+body { background: #f5f6fa; font-family: 'Roboto', 'Segoe UI', Arial, sans-serif; margin: 0; }
+.main-title { display: flex; align-items: center; justify-content: center; font-size: 2.2rem; font-weight: bold; margin-top: 2rem; margin-bottom: 2.5rem; color: #222; gap: 0.7rem;}
+#run-log { margin: 0 auto 2.2rem auto;  color: #555; font-size: 1.04em; background: #fff; border-radius: 14px; box-shadow: 0 2px 10px #0001; padding: 1.1em 1.7em 1.2em 1.4em;}
+#posts { max-width: 1800px; margin: 0 auto 3.5rem auto; padding: 0 2vw; }
+.day-row {
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  align-items: start;
+  margin-bottom: 3.2rem;
+  margin-top: 2.7rem;
+  border-bottom: 1.2px dashed #e7e7ef;
+  padding-bottom: 1.4rem;
+  column-gap: 2.2rem;
+}
+.timeline-date {
+  text-align: right;
+  font-weight: bold;
+  font-size: 1.17em;
+  color: var(--primary);
+  letter-spacing: .5px;
+  padding-top: 3px;
+  padding-right: 10px;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8em;
+  min-width: 0;
+  white-space: nowrap;
+  background: linear-gradient(90deg, #f5f6fa 96%, #fff0 100%);
+  z-index: 3;
+  position: sticky;
+  left: 0;
+  top: 85px;
+  box-shadow: 8px 0 8px -8px #e7e7ef70;
+  border-radius: 12px 0 0 12px;
+  min-height: 38px;
+  transition: background 0.3s, color 0.3s;
+}
+.timeline-date.today {
+  background: linear-gradient(90deg, #e3f1fd 96%, #fff0 100%);
+  color: #da2638;
+}
+.timeline-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 5px;
+}
+.cards-day {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  align-items: flex-start;
+  min-width: 0;
+}
+.card {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 4px 24px 0 #0001;
+  padding: 1.4rem 1.6rem 1.2rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  min-width: 370px;
+  max-width: 450px;
+  transition: box-shadow 0.18s;
+  position: relative;
+  overflow: hidden;
+}
+.card:hover { box-shadow: 0 6px 36px 0 #0002; }
+
+.card-time {
+  width: 100%;
+  display: block;
+  font-weight: bold;
+  font-size: 1.18em;
+  letter-spacing: 1.2px;
+  color: var(--primary);
+  background: #f5fafe;
+  padding: 0.16em 0 0.26em 0;
+  margin-bottom: 0.7em;
+  border-bottom: 1px solid #e7e7ef;
+  text-align: left;
+}
+.card-header {
+  font-size: 1.13rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.3rem;
+  gap: 0.7em;
+  flex-wrap: nowrap;
+  min-width: 0;
+}
+.user-link {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+  margin-right: 1rem;
+  max-width: 185px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  vertical-align: middle;
+}
+.user-link[title]:hover { text-decoration: underline; }
+.date { display: none !important; }
+.post-link { margin-left: auto; color: var(--primary); text-decoration: none; display: flex; align-items: center; font-size: 1.18em;}
+.post-link:hover { color: var(--primary-dark);}
+.comment-toggle {
+  color: #babdc2;
+  cursor: pointer;
+  margin-left: 0.5em;
+  font-size: 1.2em;
+  transition: color 0.2s;
+}
+.cards-day .comment-toggle { color: var(--primary); opacity: .68; }
+.cards-day .comment-toggle:hover { color: var(--primary-dark); }
+.card-body { margin: 0.6rem 0 1.1rem 0; font-size: 1.12rem; color: #1a232e; word-break: break-word; min-height: 50px; flex: 1 1 auto; white-space: pre-line; }
+.card-footer, .comments-list { display: none; }
+.card-footer.active, .comments-list.active { display: flex; }
+.card-footer {
+  margin-top: auto;
+  gap: 0.4rem;
+  align-items: center;
+  padding-top: 0.6rem;
+  border-top: 1px solid #f2f2f2;
+}
+.comment-input { flex: 1; border: 1px solid #ddd; border-radius: 8px; padding: 0.43rem 0.85rem; font-size: 1.03rem; transition: border 0.2s; outline: none;}
+.comment-input:focus { border: 1.5px solid var(--primary); }
+.add-comment-btn { border: none; background: var(--primary); color: #fff; padding: 0.48rem 1.1rem; border-radius: 8px; font-weight: bold; font-size: 1rem; cursor: pointer; transition: background 0.16s;}
+.add-comment-btn:hover { background: var(--primary-dark);}
+.comments-list { margin-top: 0.6rem; padding-left: 0.4rem; flex-direction: column; }
+.comment-item { color: #444; background: #f8fafc; border-radius: 9px; margin-bottom: 5px; padding: 0.35em 0.8em; font-size: 0.98em; }
+.comment-item .comment-date { color: #aaa; font-size: 0.9em; margin-left: 0.7em;}
+/* ---- zelený den: override ---- */
+.day-row.green, .day-row.green .timeline-date, .day-row.green .card, .day-row.green .user-link, .day-row.green .card-time, .day-row.green .post-link, .day-row.green .comment-toggle {
+  --primary: #27b36a;
+  --primary-dark: #157144;
+}
+.day-row.green .timeline-dot { background: #27b36a !important; }
+.day-row.green .timeline-date { color: #27b36a !important; }
+.day-row.green .card-time { color: #27b36a !important; }
+.day-row.green .user-link, .day-row.green .post-link, .day-row.green .comment-toggle { color: #27b36a !important; }
+@media (max-width: 1050px) {
+  .card { min-width: 260px; max-width: 100%; }
+  .cards-day { gap: 1.1rem; }
+}
+@media (max-width: 800px) {
+  #posts { padding: 0; }
+  .main-title { font-size: 1.45rem; }
+  .card { padding: 1.15rem 0.8rem 1rem 0.9rem; }
+  .day-row { flex-direction: column; gap: 0.7rem; padding-bottom: 0.7rem; }
+  .timeline-date { text-align: left; margin-bottom: 8px; position: static !important; border-radius: 0; background: none; box-shadow:none;}
+}
   </style>
 </head>
 <body>
@@ -38,48 +172,76 @@
     <span class="material-icons" style="font-size:2.5rem; color:#e96458;">edit_note</span>
     Facebook Poptávky
   </div>
-  <div id="run-log" style="margin:0 auto 2rem auto; max-width:900px; color:#555;"></div>
-
+  <div id="run-log"></div>
   <div id="posts">Načítám...</div>
   <script>
-    // URL na data z Firebase:
     const FIREBASE_URL = "https://poptavky-b6fa1-default-rtdb.europe-west1.firebasedatabase.app/poptavky.json";
-    // Komentáře ukládáme do /poptavky/{postId}/comments.json
-function fetchRunLog() {
-  fetch("https://poptavky-b6fa1-default-rtdb.europe-west1.firebasedatabase.app/runs.json")
-    .then(r=>r.json())
-    .then(data => {
-      if (!data) return;
-      let arr = Object.values(data).sort((a, b) => new Date(b.started) - new Date(a.started)).slice(0,10);
-      let html = "<b>Poslední běhy:</b><br><table style='width:100%;font-size:0.97em;margin-top:7px;'><tr><th>Začátek</th><th>Konec</th><th>Doba</th><th>Zpracováno</th><th>Nové</th></tr>";
-      for (const run of arr) {
-        html += `<tr>
-          <td>${new Date(run.started).toLocaleString('cs-CZ')}</td>
-          <td>${new Date(run.finished).toLocaleString('cs-CZ')}</td>
-          <td>${run.duration_sec}s</td>
-          <td>${run.total}</td>
-          <td>${run.saved}</td>
-        </tr>`;
-      }
-      html += "</table>";
-      document.getElementById("run-log").innerHTML = html;
-    });
-}
-fetchRunLog();
-setInterval(fetchRunLog, 45000); // každých 45s
+    function fetchRunLog() {
+      const KEYS = [
+        ["started", "Poslední aktualizace", "<span class='material-icons' title='Poslední aktualizace'>schedule</span>"],
+        ["finished", "Konec", "<span class='material-icons' title='Konec'>hourglass_bottom</span>"],
+        ["duration_sec", "Doba [s]", "<span class='material-icons' title='Doba'>timer</span>"],
+        ["total", "Zpracováno", "<span class='material-icons' title='Zpracováno'>done_all</span>"],
+        ["saved", "Nové", "<span class='material-icons' title='Nové'>fiber_new</span>"],
+        ["dup", "Duplicit", "<span class='material-icons' title='Duplicit'>content_copy</span>"],
+        ["offer", "Nabídky", "<span class='material-icons' title='Nabídky'>local_offer</span>"],
+        ["noKey", "Bez klíče", "<span class='material-icons' title='Bez klíče'>vpn_key_off</span>"],
+        ["noUrl", "Bez URL", "<span class='material-icons' title='Bez URL'>link_off</span>"],
+        ["note", "Poznámka", "<span class='material-icons' title='Poznámka'>sticky_note_2</span>"]
+      ];
+      fetch("https://poptavky-b6fa1-default-rtdb.europe-west1.firebasedatabase.app/runs.json")
+        .then(r => r.json())
+        .then(data => {
+          if (!data) return;
+          let arr = Object.values(data)
+            .filter(run => run.started)
+            .sort((a, b) => new Date(b.started) - new Date(a.started));
+          let run = arr[0];
+          if (!run) return;
+          let html = `<div style='display:flex;flex-wrap:wrap;align-items:center;gap:1.7em;font-size:.99em;background:#fff;padding:.65em 1.3em;border-radius:1em;box-shadow:0 2px 14px #0001;justify-content:center;'>`;
+          for (const [key, label, icon] of KEYS) {
+            let value = run[key];
+            if (key === "started" || key === "finished") {
+              value = value ? new Date(value).toLocaleString('cs-CZ') : "";
+            }
+            if (typeof value === "undefined" || value === null || value === "") continue;
+            html += `<span style='display:inline-flex;align-items:center;gap:0.24em;min-width:0.8em;'>
+              <span style='opacity:.79;cursor:pointer;' title='${label}'>${icon}</span>
+              <span style='font-weight:bold;min-width:2.3em;text-align:right;line-height:1;'>${value}</span>
+            </span>`;
+          }
+          html += `</div>`;
+          document.getElementById("run-log").innerHTML = html;
+        });
+    }
+    fetchRunLog();
+    setInterval(fetchRunLog, 45000);
 
     function extractPostDate(text) {
-      const months = ["ledna","února","března","dubna","května","června","července","srpna","září","října","listopadu","prosince"];
-      const re = /(\d{1,2})\.\s*(ledna|února|března|dubna|května|června|července|srpna|září|října|listopadu|prosince)\s*v\s*(\d{1,2}:\d{2})/i;
+      const months = [
+        "ledna","února","března","dubna","května","června",
+        "července","srpna","září","října","listopadu","prosince"
+      ];
+      const re = /(\d{1,2})\.\s*(ledna|února|března|dubna|května|června|července|srpna|září|října|listopadu|prosince)\s+v?e?\s+(\d{1,2}):(\d{2})/i;
       const match = text.match(re);
       if (!match) return null;
       const day = parseInt(match[1]);
       const month = months.indexOf(match[2].toLowerCase());
-      const time = match[3];
+      const hour = parseInt(match[3]);
+      const minute = parseInt(match[4]);
       if (month === -1) return null;
       const year = (new Date()).getFullYear();
-      const dateStr = `${year}-${(month+1).toString().padStart(2,"0")}-${day.toString().padStart(2,"0")}T${time}:00`;
-      return new Date(dateStr);
+      return new Date(year, month, day, hour, minute, 0, 0);
+    }
+
+    function extractCleanText(text) {
+      // Odstraní "? 22. července v 12:32" nebo podobný začátek, případně i "? "
+      return text.replace(/^[?]?\s*\d{1,2}\.\s*(ledna|února|března|dubna|května|června|července|srpna|září|října|listopadu|prosince)\s+v?e?\s+\d{1,2}:\d{2}\s*/i, '').trim();
+    }
+
+    function extractOnlyTime(date) {
+      if (!date) return "";
+      return date.toLocaleTimeString('cs-CZ', { hour: '2-digit', minute: '2-digit' });
     }
 
     function fetchComments(postId, cb) {
@@ -114,93 +276,132 @@ setInterval(fetchRunLog, 45000); // každých 45s
         container.innerHTML = '<div style="color:#999">Žádné příspěvky...</div>';
         return;
       }
-      // --- získat id pro každý post
+
+      const timelineColors = ['#1976d2', '#e96458', '#27b36a', '#e4a600', '#9562e6'];
+      const greenDays = [2]; // indexy dnů (ve timelineColors) které jsou zelené – tj. 2 => #27b36a
+
       const items = Object.entries(data)
         .map(([id, post]) => ({...post, _id: id}))
+        .map(post => {
+          let dt = extractPostDate(post.text || "");
+          post._dateObj = dt;
+          post._dateStr = dt
+            ? dt.toLocaleDateString('cs-CZ', { year: 'numeric', month: '2-digit', day: '2-digit' })
+            : 'Neznámé datum';
+          return post;
+        })
         .sort((a, b) => {
-          const d1 = extractPostDate(a.text || "") || new Date(0);
-          const d2 = extractPostDate(b.text || "") || new Date(0);
-          return d2 - d1;
+          if (!a._dateObj && !b._dateObj) return 0;
+          if (!a._dateObj) return 1;
+          if (!b._dateObj) return -1;
+          return b._dateObj - a._dateObj;
         });
-      container.innerHTML = '';
+
+      let days = {};
       for (const post of items) {
-        let realDate = extractPostDate(post.text || "");
-        let showDate = realDate
-          ? realDate.toLocaleString('cs-CZ', { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" })
-          : "";
+        const key = post._dateStr;
+        if (!days[key]) days[key] = [];
+        days[key].push(post);
+      }
 
-        // --- generujeme jedinečný element id pro komentáře u každého postu
-        const commentsId = "comments_" + post._id;
-        container.innerHTML += `
-          <div class="card" id="post_${post._id}">
-            <div class="card-header">
-              <span class="material-icons" title="Profil">person</span>
-              ${
-                post.userUrl
-                  ? `<a href="${post.userUrl}" target="_blank" class="user-link" title="Profil na Facebooku">${post.author || "Neznámý"}</a>`
-                  : `<span class="user-link" style="color:#aaa;pointer-events:none;">${post.author || "Neznámý"}</span>`
-              }
-              <span class="date"><span class="material-icons" style="font-size:1em;vertical-align:-2px;">schedule</span>
-                ${showDate}
-              </span>
-              <a href="${post.url}" target="_blank" class="post-link" title="Otevřít příspěvek">
-                <span class="material-icons">open_in_new</span>
-              </a>
-            </div>
-            <div class="card-body">${post.text || ""}</div>
-            <div class="comments-list" id="${commentsId}">
-              <span style="color:#bbb;">Načítám komentáře...</span>
-            </div>
-            <div class="card-footer">
-              <input type="text" placeholder="Komentář..." class="comment-input" id="input_${post._id}">
-              <button class="add-comment-btn" id="btn_${post._id}" disabled>Odeslat</button>
-            </div>
-          </div>
-        `;
-        // --- hned načti komentáře
-        fetchComments(post._id, (comments) => {
-          const el = document.getElementById(commentsId);
-          if (!comments) {
-            el.innerHTML = '<span style="color:#bbb;">(Žádné komentáře)</span>';
-            return;
-          }
-          el.innerHTML = Object.values(comments).map(c => `
-            <div class="comment-item">
-              ${c.text}
-              <span class="comment-date">${new Date(c.time).toLocaleString('cs-CZ', {day:'2-digit',month:'2-digit',year:'numeric', hour:'2-digit',minute:'2-digit'})}</span>
-            </div>
-          `).join('');
-        });
-
-        // --- komentář input eventy
-        setTimeout(() => {
-          const input = document.getElementById(`input_${post._id}`);
-          const btn = document.getElementById(`btn_${post._id}`);
-          input.addEventListener('input', () => {
-            btn.disabled = !input.value.trim();
-          });
-          btn.addEventListener('click', () => {
-            if (!input.value.trim()) return;
-            btn.disabled = true;
-            addComment(post._id, input.value.trim(), () => {
-              input.value = "";
-              btn.disabled = false;
-              fetchComments(post._id, (comments) => {
-                const el = document.getElementById(commentsId);
-                if (!comments) {
-                  el.innerHTML = '<span style="color:#bbb;">(Žádné komentáře)</span>';
-                  return;
+      let html = '';
+      let colorIdx = 0;
+      for (const day of Object.keys(days)) {
+        const color = timelineColors[colorIdx % timelineColors.length];
+        const isGreen = color === '#27b36a';
+        html += `<div class="day-row${isGreen ? ' green' : ''}">
+          <div class="timeline-date"><span class="timeline-dot" style="background:${color}"></span>${day}</div>
+          <div class="cards-day">`;
+        for (const post of days[day]) {
+          let realDate = post._dateObj;
+          let showTime = extractOnlyTime(realDate);
+          const commentsId = "comments_" + post._id;
+          html += `
+            <div class="card" id="post_${post._id}">
+              <div class="card-time">${showTime}</div>
+              <div class="card-header">
+                <span class="material-icons" title="Profil">person</span>
+                ${
+                  post.userUrl
+                    ? `<a href="${post.userUrl}" target="_blank" class="user-link" title="${post.author || "Neznámý"}">${post.author || "Neznámý"}</a>`
+                    : `<span class="user-link" style="color:#aaa;pointer-events:none;" title="${post.author || "Neznámý"}">${post.author || "Neznámý"}</span>`
                 }
-                el.innerHTML = Object.values(comments).map(c => `
-                  <div class="comment-item">
-                    ${c.text}
-                    <span class="comment-date">${new Date(c.time).toLocaleString('cs-CZ', {day:'2-digit',month:'2-digit',year:'numeric', hour:'2-digit',minute:'2-digit'})}</span>
-                  </div>
-                `).join('');
+                <span class="material-icons comment-toggle" title="Přidat komentář">chat_bubble_outline</span>
+                <a href="${post.url}" target="_blank" class="post-link" title="Otevřít příspěvek">
+                  <span class="material-icons">open_in_new</span>
+                </a>
+              </div>
+              <div class="card-body">${extractCleanText(post.text || "")}</div>
+              <div class="comments-list" id="${commentsId}">
+                <span style="color:#bbb;">Načítám komentáře...</span>
+              </div>
+              <div class="card-footer">
+                <input type="text" placeholder="Komentář..." class="comment-input" id="input_${post._id}">
+                <button class="add-comment-btn" id="btn_${post._id}" disabled>Odeslat</button>
+              </div>
+            </div>
+          `;
+        }
+        html += '</div></div>';
+        colorIdx++;
+      }
+      container.innerHTML = html;
+
+      for (const day of Object.keys(days)) {
+        for (const post of days[day]) {
+          const commentsId = "comments_" + post._id;
+          fetchComments(post._id, (comments) => {
+            const el = document.getElementById(commentsId);
+            if (!comments) {
+              el.innerHTML = '<span style="color:#bbb;">(Žádné komentáře)</span>';
+              return;
+            }
+            el.innerHTML = Object.values(comments).map(c => `
+              <div class="comment-item">
+                ${c.text}
+                <span class="comment-date">${new Date(c.time).toLocaleString('cs-CZ', {day:'2-digit',month:'2-digit',year:'numeric', hour:'2-digit',minute:'2-digit'})}</span>
+              </div>
+            `).join('');
+          });
+
+          setTimeout(() => {
+            const card = document.getElementById(`post_${post._id}`);
+            const input = card.querySelector(`.comment-input`);
+            const btn = card.querySelector(`.add-comment-btn`);
+            const footer = card.querySelector(`.card-footer`);
+            const commentsDiv = card.querySelector(`.comments-list`);
+            const toggle = card.querySelector(`.comment-toggle`);
+            toggle.addEventListener('click', () => {
+              footer.classList.toggle('active');
+              commentsDiv.classList.toggle('active');
+              if (footer.classList.contains('active')) input.focus();
+            });
+            input.addEventListener('input', () => {
+              btn.disabled = !input.value.trim();
+            });
+            btn.addEventListener('click', () => {
+              if (!input.value.trim()) return;
+              btn.disabled = true;
+              addComment(post._id, input.value.trim(), () => {
+                input.value = "";
+                btn.disabled = false;
+                fetchComments(post._id, (comments) => {
+                  const el = card.querySelector(`.comments-list`);
+                  if (!comments) {
+                    el.innerHTML = '<span style="color:#bbb;">(Žádné komentáře)</span>';
+                    return;
+                  }
+                  el.innerHTML = Object.values(comments).map(c => `
+                    <div class="comment-item">
+                      ${c.text}
+                      <span class="comment-date">${new Date(c.time).toLocaleString('cs-CZ', {day:'2-digit',month:'2-digit',year:'numeric', hour:'2-digit',minute:'2-digit'})}</span>
+                    </div>
+                  `).join('');
+                });
               });
             });
-          });
-        }, 10);
+          }, 10);
+        }
       }
     }
   </script>
