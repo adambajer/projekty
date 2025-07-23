@@ -1,163 +1,399 @@
 <!DOCTYPE html>
 <html lang="cs">
+
 <head>
   <meta charset="UTF-8">
   <title>📋 Facebook Poptávky</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <style>
-:root {
-  --primary: #1976d2;
-  --primary-dark: #1254a0;
-}
-body { background: #f5f6fa; font-family: 'Roboto', 'Segoe UI', Arial, sans-serif; margin: 0; }
-.main-title { display: flex; align-items: center; justify-content: center; font-size: 2.2rem; font-weight: bold; margin-top: 2rem; margin-bottom: 2.5rem; color: #222; gap: 0.7rem;}
-#run-log { margin: 0 auto 2.2rem auto;  color: #555; font-size: 1.04em; background: #fff; border-radius: 14px; box-shadow: 0 2px 10px #0001; padding: 1.1em 1.7em 1.2em 1.4em;}
-#posts { max-width: 1800px; margin: 0 auto 3.5rem auto; padding: 0 2vw; }
-.day-row {
-  display: grid;
-  grid-template-columns: 130px 1fr;
-  align-items: start;
-   border-bottom: 1.2px dashed #e7e7ef;
-  padding-bottom: 1.4rem;
- }
-.timeline-date {
-  text-align: right;
-  font-weight: bold;
-  font-size: 1.17em;
-  color: var(--primary);
-  letter-spacing: .5px;
-  padding-top: 3px;
-   display: flex;
-  align-items: flex-start;
-   min-width: 0;
-  white-space: nowrap;
-  background: linear-gradient(90deg, #f5f6fa 96%, #fff0 100%);
-  z-index: 3;
-  position: sticky;
-  left: 0;
-  top: 85px;
-  box-shadow: 8px 0 8px -8px #e7e7ef70;
-  border-radius: 12px 0 0 12px;
-  min-height: 38px;
-  transition: background 0.3s, color 0.3s;
-}
-.timeline-date.today {
-  background: linear-gradient(90deg, #e3f1fd 96%, #fff0 100%);
-  color: #da2638;
-}.timeline-dot {
-    width: 12px;
-    height: 12px;
-    position: absolute;
-    border-radius: 50%;
-    display: inline-block;
-    background: var(--primary);
-    margin-right: 0px;
-    right: -7px;
-}
-.cards-day {
-  column-count: 2;
-   min-width: 0; 
-  display: block;border-left: 1px solid var(--primary);padding-left: 1rem;
-}
-.card {
-  background: #fff; 
-  box-shadow: 0 4px 24px 0 #0001;
-  padding: 1em;
-display: block;
-  break-inside: avoid;
-  width: 100%;
-  min-width: 250px;
-  max-width: 360px;
-  margin-bottom: 20px;border-bottom: 1px solid var(--primary);}
-@media (max-width: 1050px) {
-  .cards-day { column-count: 1; }
-}
-@media (min-width: 1400px) {
-  .cards-day { column-count: 4; }
-}
- 
-.card:hover { box-shadow: 0 6px 36px 0 #0002; }
+    :root {
+      --primary: #1976d2;
+      --primary-dark: #1254a0;
+    }
 
-.card-time {
-   font-weight: bold; }
-.card-header {
-  font-size: 1.13rem;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  margin-bottom: 0.3rem;
-  gap: 0.7em;
-  flex-wrap: nowrap;
-  min-width: 0;
+    body {
+      background: #f5f6fa;
+      font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+    }
+
+    .main-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      font-weight: bold;
+      margin-top: 2rem;
+      margin-bottom: 2.5rem;
+      color: #222;
+      gap: 0.7rem;
+    }
+
+    #run-log {
+      color: #555;      position: sticky;
+
+      top: 0px;
+      z-index: 6;   
+      font-size: 1.04em;
+     
+      display:flex;flex-wrap:wrap;align-items:center;gap:1.7em;font-size:.99em; justify-content:center;
+    }#run-log div {
+      box-shadow: 0 2px 10px #0001;
+      padding:10px;
+      border-radius: 14px;
+      background: #ffffff8e;
+      border: 1px solid #ddd;
+      backdrop-filter: blur(4px);
+      z-index: 2000 !important;
+    }
+
+    #posts {
+      max-width: 1800px;
+      margin: 0 auto 3.5rem auto;
+      padding: 0 2vw;
+    }
+
+    .day-row {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      /* timeline + karty */
+      align-items: start;
+      min-height: 90px;
+    }
+
+    .timeline {
+      position: relative;
+      width: 110px;
+      min-height: 90px;
+      display: flex;
+      align-items:  flex-start;
+      height: 100%;
+
+      justify-content: flex-start;
+    }
+
+    .timeline-line { 
+      width: 3px;
+      height: 100%;
+      background: var(--primary, #1976d2);
+      z-index: 0;
+    }
+
+    .timeline-dot {
+       width: 15px;
+      height: 15px;
+      background: var(--primary);
+      border-radius: 50%;
+      transform: translate(-60%, 10px);
+      z-index: 1;
+    }
+
+    .timeline-date,
+    .timeline-dot {
+      position: sticky;
+      top: 0px;
+      z-index: 5;   
+    }
+ .timeline-date {      transform: translate(0, 10px);
+
 }
-.profil {
- }
-.user-link {
-   text-decoration: none;
-  font-weight: 600;
-  margin-right: 1rem;
-  max-width: 185px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: inline-block;
-  vertical-align: middle;
-}
-.user-link[title]:hover { text-decoration: underline; }
-.date { display: none !important; }
-.post-link { margin-left: auto; text-decoration: none; display: flex; align-items: center; font-size: 1.18em;}
-.post-link:hover { }
-.comment-toggle {
-  color: #babdc2;
-  cursor: pointer;
-  margin-left: 0.5em;
-  font-size: 1.2em;
-  transition: color 0.2s;
-}
-.cards-day .comment-toggle {   opacity: .68; }
-.cards-day .comment-toggle:hover {   }
-.card-body { margin: 0.6rem 0 1.1rem 0; font-size: 1.12rem; color: #1a232e; word-break: break-word; min-height: 50px; flex: 1 1 auto; white-space: pre-line; }
-.card-footer, .comments-list { display: none; }
-.card-footer.active, .comments-list.active { display: flex; }
-.card-footer {
-  margin-top: auto;
-  gap: 0.4rem;
-  align-items: center;
-  padding-top: 0.6rem;
-  border-top: 1px solid #f2f2f2;
-}
-.comment-input { flex: 1; border: 1px solid #ddd; border-radius: 8px; padding: 0.43rem 0.85rem; font-size: 1.03rem; transition: border 0.2s; outline: none;}
-.comment-input:focus { border: 1.5px solid var(--primary); }
-.add-comment-btn { border: none; background: var(--primary); color: #fff; padding: 0.48rem 1.1rem; border-radius: 8px; font-weight: bold; font-size: 1rem; cursor: pointer; transition: background 0.16s;}
-.add-comment-btn:hover { background: var(--primary-dark);}
-.comments-list { margin-top: 0.6rem; padding-left: 0.4rem; flex-direction: column; }
-.comment-item { color: #444; background: #f8fafc; border-radius: 9px; margin-bottom: 5px; padding: 0.35em 0.8em; font-size: 0.98em; }
-.comment-item .comment-date { color: #aaa; font-size: 0.9em; margin-left: 0.7em;}
-/* ---- zelený den: override ---- */
-.day-row.green, .day-row.green .timeline-date, .day-row.green .card, .day-row.green .user-link, .day-row.green .card-time, .day-row.green .post-link, .day-row.green .comment-toggle {
-  --primary: #27b36a;
-  --primary-dark: #157144;
-}
-.day-row.green .timeline-dot { background: #27b36a !important; }
-.day-row.green .timeline-date { color: #27b36a !important; }
-.day-row.green .card-time { color: #27b36a !important; }
-.day-row.green .user-link, .day-row.green .post-link, .day-row.green .comment-toggle { color: #27b36a !important; }
-@media (max-width: 1050px) {
-  .card { min-width: 260px; max-width: 100%; }
-  .cards-day { gap: 1.1rem; }
-}
-@media (max-width: 800px) {
-  #posts { padding: 0; }
-  .main-title { font-size: 1.45rem; }
-  .card { padding: 1.15rem 0.8rem 1rem 0.9rem; }
-  .day-row { flex-direction: column; gap: 0.7rem; padding-bottom: 0.7rem; }
-  .timeline-date { text-align: left; margin-bottom: 8px; position: static !important; border-radius: 0; background: none; box-shadow:none;}
-}
+
+    .day-row {
+      position: relative;
+      /* nic víc nemusíš */
+    }
+
+    .timeline-date { 
+       font-size: 0.75em;
+      color: var(--primary, #1976d2);
+      font-weight: bold;
+      white-space: nowrap;
+      z-index: 2;
+      background: none;
+      border-radius: 0;
+    }
+
+    .cards-day {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      /* počet sloupců podle šířky */
+      gap: 0;
+      /* žádná mezera */
+      padding-left: 0;
+    }
+
+    .profil {
+      color: var(--primary);
+      font-size: 1.2em;
+    }
+
+    .card {
+      background: #fff;
+      padding: 0.78em 0.92em 2.2em 0.92em;
+      /* extra místo dole pro tlačítko komentářů */
+      border: 1px solid #eaeaea;
+      border-radius: 0;
+      margin-bottom: 0;
+      min-width: 0;
+      max-width: 100%;
+      width: auto;
+      position: relative;
+      box-shadow: none;
+    }
+
+    #posts {
+      max-width: 1800px;
+      margin: 0 auto 3.5rem auto;
+      padding: 0;
+      /* Žádné vnitřní odsazení */
+    }
+
+
+
+    .card:hover {
+      box-shadow: 0 6px 36px 0 #0002;
+     }
+
+    .card-time {
+      font-weight: bold;
+      font-size: 0.96em;
+      color: #666;
+    }
+
+    .card-header {
+      font-size: 1em;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.35em;
+      margin-bottom: 0.13rem;
+      min-width: 0;
+    }
+
+    .profil {}
+
+    .user-link {
+      text-decoration: none;
+      font-weight: 600;
+      margin-right: 1rem;
+      max-width: 185px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: inline-block;
+      color: black;
+      vertical-align: middle;
+    }
+
+    .user-link[title]:hover {
+      text-decoration: underline;
+    }
+
+    .date {
+      display: none !important;
+    }
+
+    .post-link {
+      margin-left: auto;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      font-size: 1.18em;
+    }
+
+    .post-link:hover {}
+
+    .card {
+      position: relative;
+    }
+
+    .card .comment-toggle {
+      position: absolute;
+      right: 0.7em;
+      bottom: 0.7em;
+      margin: 0;
+      color: #babdc2;
+      opacity: 0.8;
+      font-size: 1.15em;
+      transition: color 0.2s, opacity 0.2s;
+      z-index: 2;
+      color: var(--primary);
+
+    }
+
+    .card .comment-toggle:hover {
+      color: var(--primary);
+      opacity: 1;
+    }
+
+
+    .card-body {
+      margin: 0.25rem 0 0.7rem 0;
+      font-size: 1.07rem;
+      color: #1a232e;
+      word-break: break-word;
+      min-height: 34px;
+      flex: 1 1 auto;
+      padding: 0;
+      /* menší padding textu */
+      white-space: pre-line;
+    }
+
+    .card-footer,
+    .comments-list {
+      display: none;
+    }
+
+    .card-footer.active,
+    .comments-list.active {
+      display: flex;
+    }
+
+    .card-footer {
+      margin-top: auto;
+      gap: 0.4rem;
+      align-items: center;
+      padding-top: 0.6rem;
+      border-top: 1px solid #f2f2f2;
+    }
+
+    .comment-item {
+      padding: 0.23em 0.6em;
+      font-size: 0.95em;
+      margin-bottom: 2px;
+      border-radius: 7px;
+    }
+
+    .comment-input {
+      flex: 1;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 0.43rem 0.85rem;
+      font-size: 1.03rem;
+      transition: border 0.2s;
+      outline: none;
+    }
+
+    .comment-input:focus {
+      border: 1.5px solid var(--primary);
+    }
+
+    .add-comment-btn {
+      border: none;
+      background: var(--primary);
+      color: #fff;
+      padding: 0.48rem 1.1rem;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.16s;
+    }
+
+    .add-comment-btn:hover {
+      background: var(--primary-dark);
+    }
+
+    .comments-list {
+      margin-top: 0.6rem;
+      padding-left: 0.4rem;
+      flex-direction: column;
+    }
+
+    .comment-item {
+      color: #444;
+      background: #f8fafc;
+      border-radius: 9px;
+      margin-bottom: 5px;
+      padding: 0.35em 0.8em;
+      font-size: 0.98em;
+    }
+
+    .comment-item .comment-date {
+      color: #aaa;
+      font-size: 0.9em;
+      margin-left: 0.7em;
+    }
+
+    /* ---- zelený den: override ---- */
+    .day-row.green,
+    .day-row.green .timeline-date,
+    .day-row.green .card,
+    .day-row.green .user-link,
+    .day-row.green .card-time,
+    .day-row.green .post-link,
+    .day-row.green .comment-toggle {
+      --primary: #27b36a;
+      --primary-dark: #157144;
+    }
+
+    .day-row.green .timeline-dot {
+      background: #27b36a !important;
+    }
+
+    .day-row.green .timeline-date {
+      color: #27b36a !important;
+    }
+
+    .day-row.green .card-time {
+      color: #27b36a !important;
+    }
+
+    .day-row.green .user-link,
+    .day-row.green .post-link,
+    .day-row.green .comment-toggle {
+      color: #27b36a !important;
+    }
+
+    @media (max-width: 1050px) {
+      .card {
+        min-width: 260px;
+        max-width: 100%;
+      }
+
+      .cards-day {
+        gap: 1.1rem;
+      }
+    }
+
+    @media (max-width: 800px) {
+      #posts {
+        padding: 0;
+      }
+
+      .main-title {
+        font-size: 1.45rem;
+      }
+
+      .card {
+        padding: 1.15rem 0.8rem 1rem 0.9rem;
+      }
+
+      .day-row {
+        flex-direction: column;
+        gap: 0.7rem;
+        padding-bottom: 0.7rem;
+      }
+
+      .timeline-date {
+        text-align: left;
+        margin-bottom: 8px;
+        position: static !important;
+        border-radius: 0;
+        background: none;
+        box-shadow: none;
+      }
+    }
+
+    .openinnew {
+      color: var(--primary);
+    }
   </style>
 </head>
+
 <body>
- 
+
   <div id="run-log"></div>
   <div id="posts">Načítám...</div>
   <script>
@@ -165,14 +401,14 @@ display: block;
     function fetchRunLog() {
       const KEYS = [
         ["started", "Poslední aktualizace", "<span class='material-icons' title='Poslední aktualizace'>schedule</span>"],
-         ["duration_sec", "Doba [s]", "<span class='material-icons' title='Doba'>timer</span>"],
+        ["duration_sec", "Doba [s]", "<span class='material-icons' title='Doba'>timer</span>"],
         ["total", "Zpracováno", "<span class='material-icons' title='Zpracováno'>done_all</span>"],
         ["saved", "Nové", "<span class='material-icons' title='Nové'>fiber_new</span>"],
         ["dup", "Duplicit", "<span class='material-icons' title='Duplicit'>content_copy</span>"],
         ["offer", "Nabídky", "<span class='material-icons' title='Nabídky'>local_offer</span>"],
         ["noKey", "Bez klíče", "<span class='material-icons' title='Bez klíče'>vpn_key_off</span>"],
         ["noUrl", "Bez URL", "<span class='material-icons' title='Bez URL'>link_off</span>"],
-       ];
+      ];
       fetch("https://poptavky-b6fa1-default-rtdb.europe-west1.firebasedatabase.app/runs.json")
         .then(r => r.json())
         .then(data => {
@@ -182,7 +418,7 @@ display: block;
             .sort((a, b) => new Date(b.started) - new Date(a.started));
           let run = arr[0];
           if (!run) return;
-          let html = `<div style='display:flex;flex-wrap:wrap;align-items:center;gap:1.7em;font-size:.99em;background:#fff;  ;justify-content:center;'>`;
+          let html = `<div>`;
           for (const [key, label, icon] of KEYS) {
             let value = run[key];
             if (key === "started" || key === "finished") {
@@ -203,8 +439,8 @@ display: block;
 
     function extractPostDate(text) {
       const months = [
-        "ledna","února","března","dubna","května","června",
-        "července","srpna","září","října","listopadu","prosince"
+        "ledna", "února", "března", "dubna", "května", "června",
+        "července", "srpna", "září", "října", "listopadu", "prosince"
       ];
       const re = /(\d{1,2})\.\s*(ledna|února|března|dubna|května|června|července|srpna|září|října|listopadu|prosince)\s+v?e?\s+(\d{1,2}):(\d{2})/i;
       const match = text.match(re);
@@ -254,22 +490,17 @@ display: block;
         document.getElementById('posts').innerHTML = '<div style="color:#f55;font-weight:bold">Chyba při načítání dat</div>';
       });
 
-        function renderPosts(data) {
+    function renderPosts(data) {
       const container = document.getElementById('posts');
       if (!data) {
         container.innerHTML = '<div style="color:#999">Žádné příspěvky...</div>';
         return;
       }
-      // všechny varianty, jak chceš
-const timelineColors = [
-  '#1976d2',   // Modrá (default, Facebook styl)
-  '#e96458',   // Červená/oranžová (alert, zvýraznění)
-  '#27b36a',   // Zelená (schváleno, pozitivní)
-  '#e4a600',   // Žlutá/zlatá (speciální, upozornění)
-  '#9562e6'    // Fialová (ostatní, zajímavé)
-];
+      const timelineColors = [
+        '#1976d2', '#e96458', '#27b36a', '#e4a600', '#9562e6'
+      ];
       const items = Object.entries(data)
-        .map(([id, post]) => ({...post, _id: id}))
+        .map(([id, post]) => ({ ...post, _id: id }))
         .map(post => {
           let dt = extractPostDate(post.text || "");
           post._dateObj = dt;
@@ -284,6 +515,7 @@ const timelineColors = [
           if (!b._dateObj) return -1;
           return b._dateObj - a._dateObj;
         });
+
       let days = {};
       for (const post of items) {
         const key = post._dateStr;
@@ -292,48 +524,61 @@ const timelineColors = [
       }
       let html = '';
       let colorIdx = 0;
+
       for (const day of Object.keys(days)) {
         const color = timelineColors[colorIdx % timelineColors.length];
-        // Nastaví --primary na aktuální barvu dne:
-        html += `<div class="day-row" style="--primary:${color};--primary-dark:${color};">
-          <div class="timeline-date"><span class="timeline-dot"></span>${day}</div>
-          <div class="cards-day">`;
+
+        // Timeline: čára + jedna velká tečka + datum vedle
+        let timelineHtml = `<div class="timeline" style="--primary:${color};">
+      <div class="timeline-line"></div>
+      <div class="timeline-dot"></div>
+      <span class="timeline-date">${day}</span>
+    </div>`;
+
+        let cardsHtml = `<div class="cards-day">`;
         for (const post of days[day]) {
           let realDate = post._dateObj;
           let showTime = extractOnlyTime(realDate);
           const commentsId = "comments_" + post._id;
-          html += `
-            <div class="card" id="post_${post._id}">
-              <div class="card-header">
-              <div class="card-time">${showTime}</div>
-
-              <span class="material-icons profil" title="Profil">person</span>
-                ${
-                  post.userUrl
-                    ? `<a href="${post.userUrl}" target="_blank" class="user-link" title="${post.author || "Neznámý"}">${post.author || "Neznámý"}</a>`
-                    : `<span class="user-link" style="color:#aaa;pointer-events:none;" title="${post.author || "Neznámý"}">${post.author || "Neznámý"}</span>`
-                }
-                <span class="material-icons comment-toggle" title="Přidat komentář">chat_bubble_outline</span>
-                <a href="${post.url}" target="_blank" class="post-link" title="Otevřít příspěvek">
-                  <span class="material-icons">open_in_new</span>
-                </a>
-              </div>
-              <div class="card-body">${extractCleanText(post.text || "")}</div>
-              <div class="comments-list" id="${commentsId}">
-                <span style="color:#bbb;">Načítám komentáře...</span>
-              </div>
-              <div class="card-footer">
-                <input type="text" placeholder="Komentář..." class="comment-input" id="input_${post._id}">
-                <button class="add-comment-btn" id="btn_${post._id}" disabled>Odeslat</button>
-              </div>
-            </div>
-          `;
+          cardsHtml += `
+        <div class="card" id="post_${post._id}">
+          <div class="card-header">
+            <div class="card-time">${showTime}</div>
+            <span class="material-icons profil" title="Profil">person</span>
+            ${post.userUrl
+              ? `<a href="${post.userUrl}" target="_blank" class="user-link" title="${post.author || "Neznámý"}">${post.author || "Neznámý"}</a>`
+              : `<span class="user-link" style="color:#aaa;pointer-events:none;" title="${post.author || "Neznámý"}">${post.author || "Neznámý"}</span>`
+            }
+            <span class="material-icons comment-toggle" title="Přidat komentář">chat_bubble_outline</span>
+            <a href="${post.url}" target="_blank" class="post-link" title="Otevřít příspěvek">
+              <span class="material-icons openinnew">open_in_new</span>
+            </a>
+          </div>
+          <div class="card-body">${extractCleanText(post.text || "")}</div>
+          <div class="comments-list" id="${commentsId}">
+            <span style="color:#bbb;">Načítám komentáře...</span>
+          </div>
+          <div class="card-footer">
+            <input type="text" placeholder="Komentář..." class="comment-input" id="input_${post._id}">
+            <button class="add-comment-btn" id="btn_${post._id}" disabled>Odeslat</button>
+          </div>
+        </div>
+      `;
         }
-        html += '</div></div>';
+        cardsHtml += '</div>';
+
+        html += `
+      <div class="day-row" style="--primary:${color};--primary-dark:${color};">
+        ${timelineHtml}
+        ${cardsHtml}
+      </div>
+    `;
         colorIdx++;
       }
+
       container.innerHTML = html;
 
+      // --- ZBYTEK TVÉHO KÓDU NA KOMENTÁŘE ---
       for (const day of Object.keys(days)) {
         for (const post of days[day]) {
           const commentsId = "comments_" + post._id;
@@ -344,11 +589,11 @@ const timelineColors = [
               return;
             }
             el.innerHTML = Object.values(comments).map(c => `
-              <div class="comment-item">
-                ${c.text}
-                <span class="comment-date">${new Date(c.time).toLocaleString('cs-CZ', {day:'2-digit',month:'2-digit',year:'numeric', hour:'2-digit',minute:'2-digit'})}</span>
-              </div>
-            `).join('');
+          <div class="comment-item">
+            ${c.text}
+            <span class="comment-date">${new Date(c.time).toLocaleString('cs-CZ', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
+          </div>
+        `).join('');
           });
 
           setTimeout(() => {
@@ -379,11 +624,11 @@ const timelineColors = [
                     return;
                   }
                   el.innerHTML = Object.values(comments).map(c => `
-                    <div class="comment-item">
-                      ${c.text}
-                      <span class="comment-date">${new Date(c.time).toLocaleString('cs-CZ', {day:'2-digit',month:'2-digit',year:'numeric', hour:'2-digit',minute:'2-digit'})}</span>
-                    </div>
-                  `).join('');
+                <div class="comment-item">
+                  ${c.text}
+                  <span class="comment-date">${new Date(c.time).toLocaleString('cs-CZ', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
+                </div>
+              `).join('');
                 });
               });
             });
@@ -391,6 +636,8 @@ const timelineColors = [
         }
       }
     }
+
   </script>
 </body>
+
 </html>
