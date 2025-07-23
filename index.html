@@ -123,36 +123,31 @@
       background: none;
       border-radius: 0;
     }
+.card {
+  display: block;
+  break-inside: avoid;
+  padding: 1rem;    
+  /* border: 1px solid #ccc;  <-- SMAŽ! */
+  box-shadow: 0 0 0 1px #ccc;
+  background: #fff;
+  margin-bottom:0rem; /* Pro jistotu, aby se neklepaly */
+}
+.cards-day {
+  display: block;
+  column-count: 4;
+  column-gap:0rem; /* Tohle určuje mezeru mezi kartami */
+  margin-top: 0rem;
+  margin-left: 2rem;  margin-bottom:2rem; /* Pro jistotu, aby se neklepaly */
 
-    .cards-day {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      /* počet sloupců podle šířky */
-      gap: 0;
-      /* žádná mezera */
-      padding-left: 0;
-    padding-left: 2rem;
+}
 
-    }
+
 
     .profil {
        font-size: 1em;    color: var(--primary, #1976d2);
 
     }
 
-    .card {
-      background: #fff;
-      padding: 0.78em 0.92em 2.2em 0.92em;
-      /* extra místo dole pro tlačítko komentářů */
-      border: 1px solid #eaeaea;
-      border-radius: 0;
-      margin-bottom: 0;
-      min-width: 0;
-      max-width: 100%;
-      width: auto;
-      position: relative;
-      box-shadow: none;
-    }
 
     #posts {
       max-width: 1800px;
@@ -170,7 +165,7 @@
     .card-time {
       font-weight: bold;
       font-size: 0.96em;
-      color: #666;
+      color: #000;
     }
 
     .card-header {
@@ -189,12 +184,12 @@
       text-decoration: none;
       font-weight: 600;
       margin-right: 1rem;
-      max-width: 185px;
+      max-width: 280px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       display: inline-block;       font-size: 1em;
-    color: #666;
+    color: #000;
 
       color: black;
       vertical-align: middle;
@@ -227,7 +222,7 @@
       right: 0.7em;
       bottom: 0.7em;
       margin: 0;
-    color: #666;
+    color: #000;
       opacity: 0.8;
       font-size: 1.15em;
       transition: color 0.2s, opacity 0.2s;
@@ -400,7 +395,7 @@
     }
 
     .openinnew {
-      color:#666;
+      color:#000;
       
       font-size: 1rem;;
     }
