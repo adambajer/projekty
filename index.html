@@ -13,7 +13,6 @@
     }
 
     body {
-      background: #f5f6fa;
       font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
       margin: 0;
     }
@@ -31,21 +30,30 @@
     }
 
     #run-log {
-      color: #555;      position: sticky;
+      color: #555;
+      position: fixed;
 
-      top: 0px;
-      z-index: 6;   
+      bottom: 0px;
+      z-index: 6;
       font-size: 1.04em;
-     
-      display:flex;flex-wrap:wrap;align-items:center;gap:1.7em;font-size:.99em; justify-content:center;
-    }#run-log div {
+
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      font-size: .99em;
+      justify-content: center;
+    }
+
+    #run-log div {
       box-shadow: 0 2px 10px #0001;
-      padding:10px;
-      border-radius: 14px;
+      padding: 10px; 
+      gap: 0.3em;
       background: #ffffff8e;
       border: 1px solid #ddd;
       backdrop-filter: blur(4px);
       z-index: 2000 !important;
+    }#run-log div span {
+      padding-right: 2px;font-size:1rem;
     }
 
     #posts {
@@ -67,13 +75,13 @@
       width: 110px;
       min-height: 90px;
       display: flex;
-      align-items:  flex-start;
+      align-items: flex-start;
       height: 100%;
 
       justify-content: flex-start;
     }
 
-    .timeline-line { 
+    .timeline-line {
       width: 3px;
       height: 100%;
       background: var(--primary, #1976d2);
@@ -81,7 +89,7 @@
     }
 
     .timeline-dot {
-       width: 15px;
+      width: 15px;
       height: 15px;
       background: var(--primary);
       border-radius: 50%;
@@ -93,19 +101,21 @@
     .timeline-dot {
       position: sticky;
       top: 0px;
-      z-index: 5;   
+      z-index: 5;
     }
- .timeline-date {      transform: translate(0, 10px);
 
-}
+    .timeline-date {
+      transform: translate(0, 10px);
+
+    }
 
     .day-row {
       position: relative;
       /* nic víc nemusíš */
     }
 
-    .timeline-date { 
-       font-size: 0.75em;
+    .timeline-date {
+      font-size:1rem;
       color: var(--primary, #1976d2);
       font-weight: bold;
       white-space: nowrap;
@@ -121,11 +131,13 @@
       gap: 0;
       /* žádná mezera */
       padding-left: 0;
+    padding-left: 2rem;
+
     }
 
     .profil {
-      color: var(--primary);
-      font-size: 1.2em;
+       font-size: 1em;    color: var(--primary, #1976d2);
+
     }
 
     .card {
@@ -153,7 +165,7 @@
 
     .card:hover {
       box-shadow: 0 6px 36px 0 #0002;
-     }
+    }
 
     .card-time {
       font-weight: bold;
@@ -181,7 +193,9 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      display: inline-block;
+      display: inline-block;       font-size: 1em;
+    color: #666;
+
       color: black;
       vertical-align: middle;
     }
@@ -213,12 +227,11 @@
       right: 0.7em;
       bottom: 0.7em;
       margin: 0;
-      color: #babdc2;
+    color: #666;
       opacity: 0.8;
       font-size: 1.15em;
       transition: color 0.2s, opacity 0.2s;
-      z-index: 2;
-      color: var(--primary);
+      z-index: 2; 
 
     }
 
@@ -387,7 +400,9 @@
     }
 
     .openinnew {
-      color: var(--primary);
+      color:#666;
+      
+      font-size: 1rem;;
     }
   </style>
 </head>
@@ -425,7 +440,7 @@
               value = value ? new Date(value).toLocaleString('cs-CZ') : "";
             }
             if (typeof value === "undefined" || value === null || value === "") continue;
-            html += `<span style='display:inline-flex;align-items:center;gap:0.24em;min-width:0.8em;'>
+            html += `<span style='display:inline-flex;align-items:center; >
               <span style='opacity:.79;cursor:pointer;' title='${label}'>${icon}</span>
               <span style='font-weight:bold;min-width:2.3em;text-align:right;line-height:1;'>${value}</span>
             </span>`;
