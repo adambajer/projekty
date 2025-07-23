@@ -10,7 +10,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
-    rel="stylesheet">
+    rel="stylesheet"><!-- DataTables CSS & JS CDN -->
+
   <style>
     :root {
       --primary: #1976d2;
@@ -579,6 +580,207 @@
         font-size: 0.98em;
       }
     }
+
+    .simple-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 1.11em;
+      background: #fff;
+      border-radius: 13px;
+      box-shadow: 0 3px 20px #0001;
+      overflow: hidden;
+      margin: 0 auto;
+      min-width: 220px;
+      max-width: 460px;
+    }
+
+    .simple-table th,
+    .simple-table td {
+      padding: 0.61em 1.1em;
+      border-bottom: 1px solid #ecf1f8;
+      text-align: left;
+    }
+
+    .simple-table th {
+      background: #f6fafd;
+      color: #1976d2;
+      font-size: 1.09em;
+      font-weight: 600;
+      user-select: none;
+    }
+
+    .simple-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .simple-table tbody tr:hover td {
+      background: #e8f4ff;
+    }
+
+    .kw-table-container {
+      margin: 0 auto;
+    }
+
+    .kw-table-headrow,
+    .kw-table-row {
+      display: flex;
+      align-items: center;
+      min-height: 38px;
+      border-bottom: 1px solid #f1f3f9;
+      padding: 0 8px;
+      font-size: 1.06em;
+    }
+
+    .kw-table-headrow {
+      background: #f6fafd;
+      font-weight: 700;
+      color: #1976d2;
+      border-radius: 9px 9px 0 0;
+      min-height: 38px;
+    }
+
+    .kw-table-row {
+      background: #fff;
+      transition: background .13s;
+    }
+
+    .kw-table-row:hover {
+      background: #f0f6fd;
+    }
+
+    .kw-table-cell {
+      flex: 1;
+      padding: 3px 2px 3px 7px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .kw-table-actions {
+      min-width: 44px;
+      display: flex;
+      gap: 4px;
+      justify-content: flex-end;
+    }
+
+    .kw-icon-btn {
+      border: none;
+      background: none;
+      padding: 3px;
+      margin: 0 0 0 4px;
+      cursor: pointer;
+      opacity: 0.65;
+      border-radius: 6px;
+      transition: opacity .13s, background .13s;
+      line-height: 1;
+    }
+
+    .kw-icon-btn:hover {
+      opacity: 1;
+      background: #e9f3ff;
+    }
+
+    .kw-icon {
+      width: 17px;
+      height: 17px;
+      display: inline-block;
+      vertical-align: middle;
+      fill: #1976d2;
+    }
+
+    .kw-table-select {
+      margin-right: 9px;
+    }
+
+    .kw-table-input {
+      width: 92%;
+      padding: 4px 8px;
+      font-size: 1em;
+      border: 1px solid #e4e7ef;
+      border-radius: 6px;
+      background: #f7fafb;
+    }
+
+    .kw-table-filter {
+      margin-bottom: 0.8em;
+      width: 100%;
+      max-width: 260px;
+      padding: 6px 1em;
+      border-radius: 10px;
+      border: 1.2px solid #d1d7e2;
+      font-size: 1.05em;
+    }
+
+    .kw-table-cell {
+      padding: 2px 4px 2px 7px;
+      font-size: 1em;
+    }
+
+    .kw-icon-btn {
+      margin: 0 0 0 4px;
+    }
+
+    .kw-table-actions-vertical {
+      display: flex;
+      flex-direction: row;
+      gap: 2px;
+      align-items: flex-end;
+      justify-content: center;
+      margin-left: 8px;
+      min-width: 26px;
+    }
+
+    .kw-icon-btn {
+      border: none;
+      background: none;
+      padding: 3px;
+      margin: 0;
+      cursor: pointer;
+      opacity: 0.7;
+      border-radius: 6px;
+      transition: opacity .13s, background .13s;
+      line-height: 1;
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .kw-icon-btn:hover {
+      opacity: 1;
+      background: #e9f3ff;
+    }
+
+    .kw-table-input,
+    #kw-add-input {
+      width: 92%;
+      padding: 4px 8px;
+      font-size: 1em;
+      border: 1px solid #e4e7ef;
+      border-radius: 6px;
+      background: #f7fafb;
+    }
+
+    #kw-add-btn {
+      background: #1976d2 !important;
+      color: #fff !important;
+      border: none;
+      border-radius: 6px;
+      padding: 0 20px;
+      font-weight: bold;
+      font-size: 1.08em;
+      box-shadow: 0 1px 4px #0002;
+      min-height: 32px;
+      display: flex;
+      align-items: center;
+      gap: 0.6em;
+      transition: background 0.18s;
+    }
+
+    #kw-add-btn:hover {
+      background: #1458a8 !important;
+    }
   </style>
 </head>
 
@@ -609,17 +811,73 @@
     <div class="modal-content">
       <button class="close-modal" id="close-keywords-modal" title="Zavřít">✕</button>
       <div class="modal-title">Klíčová slova</div>
-      <div id="keywords-box" class="chips-box"></div>
+      <div class="kw-table-container">
+        <input id="kw-filter" class="kw-table-filter" type="search" placeholder="Filtrovat klíčová slova…">
+        <div style="display:flex;gap:8px;margin-bottom:.8em;">
+          <input id="kw-add-input" class="kw-table-input" placeholder="Nové slovo…">
+          <button id="kw-add-btn" class="kw-icon-btn" title="Přidat">
+            Přidej
+          </button>
+        </div>
+        <div class="kw-table-headrow">
+          <input type="checkbox" id="kw-bulk-select" class="kw-table-select">
+          <div class="kw-table-cell" style="font-weight:700;cursor:pointer;" id="kw-sort-th">Klíčové slovo <span
+              id="kw-sort-arrow" style="font-size:.93em;">↑</span></div>
+          <div class="kw-table-cell" style="font-weight:700;cursor:pointer;text-align:right;" id="kw-sort-count-th">
+            Výskyty <span id="kw-sort-count-arrow" style="font-size:.93em;"></span></div>
+        </div>
+        <div id="kw-table-rows"></div>
+        <button id="kw-bulk-delete-btn" class="kw-icon-btn" style="margin-top:0.6em;display:none;">
+          <svg class="kw-icon" viewBox="0 0 24 24">
+            <path d="M3 6h18M9 6V4h6v2M8 6v14a2 2 0 002 2h4a2 2 0 002-2V6" stroke="#e63e3e" stroke-width="2"
+              fill="none" />
+          </svg>
+          Smazat vybrané
+        </button>
+        <div id="kw-admin-status" style="margin-top:1em;font-size:.97em;color:#1976d2;"></div>
+      </div>
+      <div id="kw-no-results" style="display:none;color:#b00;margin-top:1.5em;font-size:1.12em;text-align:center;">Žádné
+        slovo nenalezeno.</div>
+
+
+
     </div>
   </div>
-  <!-- Modal pro vyloučené fráze -->
-  <div id="excluded-modal" class="custom-modal">
-    <div class="modal-content">
-      <button class="close-modal" id="close-excluded-modal" title="Zavřít">✕</button>
-      <div class="modal-title">Vyloučené fráze</div>
-      <div id="excluded-box" class="chips-box"></div>
-    </div>
+<!-- Modal pro vyloučené fráze (TABULKA) -->
+<div id="excluded-modal" class="custom-modal">
+  <div class="modal-content">
+    <button class="close-modal" id="close-excluded-modal" title="Zavřít">✕</button>
+    <div class="modal-title">Vyloučené fráze</div>
+    <div class="kw-table-container">
+      <input id="ex-filter" class="kw-table-filter" type="search" placeholder="Filtrovat fráze…">
+      <div style="display:flex;gap:8px;margin-bottom:.8em;">
+        <input id="ex-add-input" class="kw-table-input" placeholder="Nová fráze…">
+        <button id="ex-add-btn" class="kw-icon-btn" title="Přidat">
+          Přidej
+        </button>
+      </div>
+     <div class="kw-table-headrow">
+  <input type="checkbox" id="ex-bulk-select" class="kw-table-select">
+  <div class="kw-table-cell" style="font-weight:700;cursor:pointer;" id="ex-sort-th">Fráze <span id="ex-sort-arrow" style="font-size:.93em;">↑</span></div>
+  <div class="kw-table-cell" style="font-weight:700;cursor:pointer;text-align:right;" id="ex-sort-count-th">
+    Výskyty <span id="ex-sort-count-arrow" style="font-size:.93em;"></span>
   </div>
+</div>
+
+      <div id="ex-table-rows"></div>
+      <button id="ex-bulk-delete-btn" class="kw-icon-btn" style="margin-top:0.6em;display:none;">
+        <svg class="kw-icon" viewBox="0 0 24 24">
+          <path d="M3 6h18M9 6V4h6v2M8 6v14a2 2 0 002 2h4a2 2 0 002-2V6" stroke="#e63e3e" stroke-width="2"
+            fill="none" />
+        </svg>
+        Smazat vybrané
+      </button>
+      <div id="ex-admin-status" style="margin-top:1em;font-size:.97em;color:#1976d2;"></div>
+    </div>
+    <div id="ex-no-results" style="display:none;color:#b00;margin-top:1.5em;font-size:1.12em;text-align:center;">Žádná fráze nenalezena.</div>
+  </div>
+</div>
+
 
 
   <div id="run-log"></div>
@@ -633,20 +891,15 @@
     }
     // Klíčová slova
     document.getElementById("show-keywords-btn").onclick = () =>
-      showModal("keywords-modal", renderKeywords);
+      showModal("keywords-modal", kwRenderTable);
     document.getElementById("close-keywords-modal").onclick = () =>
       hideModal("keywords-modal");
-    // Vyloučené fráze
-    document.getElementById("show-excluded-btn").onclick = () =>
-      showModal("excluded-modal", renderExcluded);
-    document.getElementById("close-excluded-modal").onclick = () =>
-      hideModal("excluded-modal");
+  
     // Zavírání esc a klik vedle modalu
     window.addEventListener('keydown', e => {
       if (e.key === 'Escape') {
         hideModal("keywords-modal");
-        hideModal("excluded-modal");
-      }
+       }
     });
     document.querySelectorAll('.custom-modal').forEach(modal => {
       modal.addEventListener('click', e => {
@@ -654,29 +907,408 @@
       });
     });
 
-    // Načítání dat
-    function renderKeywords() {
-      fetch("https://poptavky-b6fa1-default-rtdb.europe-west1.firebasedatabase.app/keywords.json")
-        .then(resp => resp.json())
-        .then(data => {
-          const box = document.getElementById("keywords-box");
-          if (!Array.isArray(data)) { box.innerHTML = "<em>Žádná klíčová slova</em>"; return; }
-          box.innerHTML = data.map(kw =>
-            `<span class="kw-chip">${kw}</span>`
-          ).join(' ');
-        });
+    // Pokud používáš modal, vždy zavolej renderKeywordsTable() při otevření modalu s tabulkou.
+    const KW_FIREBASE_URL = "https://poptavky-b6fa1-default-rtdb.europe-west1.firebasedatabase.app/keywords.json";
+    let kwData = [];
+    let editingIndex = null;
+
+    let kwSortAsc = true;
+
+    function kwStatus(msg, err) {
+      const el = document.getElementById("kw-admin-status");
+      el.style.color = err ? "#e63e3e" : "#1976d2";
+      el.textContent = msg;
+      setTimeout(() => { el.textContent = ""; }, 1800);
     }
-    function renderExcluded() {
-      fetch("https://poptavky-b6fa1-default-rtdb.europe-west1.firebasedatabase.app/excluded.json")
-        .then(resp => resp.json())
-        .then(data => {
-          const box = document.getElementById("excluded-box");
-          if (!Array.isArray(data)) { box.innerHTML = "<em>Žádné vyloučené fráze</em>"; return; }
-          box.innerHTML = data.map(ex =>
-            `<span class="ex-chip">${ex}</span>`
-          ).join(' ');
-        });
+
+    function kwLoadTable() {
+      fetch(KW_FIREBASE_URL).then(r => r.json()).then(arr => {
+        if (!Array.isArray(arr)) arr = [];
+        kwData = arr;
+        editingIndex = null;
+        kwLoadStats(kwRenderTable);  // načti stats a až pak renderuj
+      });
     }
+
+    const KW_STATS_URL = "https://poptavky-b6fa1-default-rtdb.europe-west1.firebasedatabase.app/kwstats.json";
+    let kwStats = {};
+    let kwSortByCount = false; // nové, pro řazení podle počtu výskytů
+
+    function kwLoadStats(cb) {
+      fetch(KW_STATS_URL).then(r => r.json()).then(obj => {
+        kwStats = obj || {};
+        if (cb) cb();
+      });
+    } function kwRenderTable() {
+      const rows = document.getElementById("kw-table-rows");
+      const bulkBtn = document.getElementById("kw-bulk-delete-btn");
+      const filterVal = document.getElementById("kw-filter").value.trim().toLowerCase();
+
+      let data = kwData.map((w, i) => ({
+        w,
+        i,
+        count: (kwStats && typeof kwStats[w] !== "undefined") ? kwStats[w] : 0
+      }))
+        .filter(obj => !filterVal || obj.w.toLowerCase().includes(filterVal));
+
+      // --- Řazení ---
+      if (kwSortByCount) {
+        data = data.sort((a, b) => kwSortAsc ? (a.count - b.count) : (b.count - a.count));
+      } else {
+        data = data.sort((a, b) => {
+          const cmp = a.w.localeCompare(b.w, "cs", { sensitivity: "base" });
+          return kwSortAsc ? cmp : -cmp;
+        });
+      }
+
+      let html = data.map(({ w, i, count }) => `
+  <div class="kw-table-row${editingIndex === i ? " editing" : ""}">
+    <input type="checkbox" class="kw-table-select" data-i="${i}">
+    <div class="kw-table-cell" style="display:flex;align-items:center;gap:8px;">
+      ${
+        editingIndex === i
+          ? `<input class="kw-table-input" id="kw-edit-input" value="${w.replace(/"/g, '&quot;')}">`
+          : `<span>${w}</span>`
+      }
+    </div>
+    <div class="kw-table-actions-vertical">
+      ${
+        editingIndex === i
+        ? `
+          <button class="kw-icon-btn" title="Uložit" data-action="save" data-i="${i}">
+            <svg class="kw-icon" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#1c932c" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
+          </button>
+          <button class="kw-icon-btn" title="Zrušit" data-action="cancel" data-i="${i}">
+            <svg class="kw-icon" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke="#b3b3b3" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+          </button>
+        `
+        : `
+          <button class="kw-icon-btn" title="Upravit" data-action="edit" data-i="${i}">
+            <svg class="kw-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z" /></svg>
+          </button>
+          <button class="kw-icon-btn" title="Smazat" data-action="delete" data-i="${i}">
+            <svg class="kw-icon" viewBox="0 0 24 24"><path d="M6 19a2 2 0 002 2h8a2 2 0 002-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" fill="#e63e3e"/></svg>
+          </button>
+        `
+      }
+    </div>
+    <div class="kw-table-cell" style="min-width:42px;text-align:right;">${count || 0}</div>
+  </div>
+`).join("");
+rows.innerHTML = html;
+
+      let selCount = document.querySelectorAll('.kw-table-select:checked').length;
+      bulkBtn.style.display = selCount ? "" : "none";
+    }
+
+
+    // Přidat nové slovo
+    document.getElementById("kw-add-btn").onclick = function () {
+      let val = document.getElementById("kw-add-input").value.trim();
+      if (!val) return;
+      if (kwData.includes(val)) return kwStatus("Toto slovo už existuje!", true);
+      kwData.push(val);
+      kwSaveAll("Slovo přidáno.");
+      document.getElementById("kw-add-input").value = "";
+    };
+
+    // Inline editace, mazání, uložení, cancel, bulk delete
+    document.getElementById("kw-table-rows").onclick = function (e) {
+      const btn = e.target.closest("button.kw-icon-btn");
+      if (!btn) return;
+      const idx = parseInt(btn.dataset.i);
+      const action = btn.dataset.action;
+      if (action === "edit") {
+        editingIndex = idx; kwRenderTable();
+        setTimeout(() => { document.getElementById("kw-edit-input").focus(); }, 50);
+      }
+      if (action === "delete") {
+        if (confirm("Opravdu smazat toto slovo?")) {
+          kwData.splice(idx, 1);
+          kwSaveAll("Slovo smazáno.");
+        }
+      }
+      if (action === "save") {
+        const val = document.getElementById("kw-edit-input").value.trim();
+        if (!val) return;
+        if (kwData.includes(val)) return kwStatus("Toto slovo už existuje!", true);
+        kwData[idx] = val;
+        editingIndex = null;
+        kwSaveAll("Slovo upraveno.");
+      }
+      if (action === "cancel") {
+        editingIndex = null; kwRenderTable();
+      }
+    };
+    // Enter při editaci
+    document.getElementById("kw-table-rows").addEventListener("keydown", function (e) {
+      if (e.target.id === "kw-edit-input" && e.key === "Enter") {
+        document.querySelector('[data-action="save"]').click();
+      }
+    });
+
+    // Řazení klikem na záhlaví
+    document.getElementById("kw-sort-th").onclick = function () {
+      kwSortAsc = !kwSortAsc;
+      document.getElementById("kw-sort-arrow").textContent = kwSortAsc ? "↑" : "↓";
+      kwRenderTable();
+    };
+    // Řazení dle slova
+    document.getElementById("kw-sort-th").onclick = function () {
+      if (!kwSortByCount) {
+        kwSortAsc = !kwSortAsc;
+      } else {
+        kwSortByCount = false;
+        kwSortAsc = true;
+      }
+      document.getElementById("kw-sort-arrow").textContent = kwSortAsc ? "↑" : "↓";
+      document.getElementById("kw-sort-count-arrow").textContent = "";
+      kwRenderTable();
+    };
+    // Řazení dle výskytů
+    document.getElementById("kw-sort-count-th").onclick = function () {
+      if (kwSortByCount) {
+        kwSortAsc = !kwSortAsc;
+      } else {
+        kwSortByCount = true;
+        kwSortAsc = false;
+      }
+      document.getElementById("kw-sort-count-arrow").textContent = kwSortAsc ? "↑" : "↓";
+      document.getElementById("kw-sort-arrow").textContent = "";
+      kwRenderTable();
+    };
+
+    // Filtrování
+    document.getElementById("kw-filter").oninput = function () {
+      kwRenderTable();
+    };
+
+    // Výběr všech pro bulk
+    document.getElementById("kw-bulk-select").onchange = function () {
+      document.querySelectorAll('.kw-table-select').forEach(cb => cb.checked = this.checked);
+      document.getElementById('kw-bulk-delete-btn').style.display = this.checked ? "" : "none";
+    };
+
+    // Bulk mazání
+    document.getElementById("kw-bulk-delete-btn").onclick = function () {
+      if (!confirm("Opravdu smazat vybraná slova?")) return;
+      let sel = Array.from(document.querySelectorAll('.kw-table-select:checked')).map(cb => parseInt(cb.dataset.i));
+      kwData = kwData.filter((_, i) => !sel.includes(i));
+      kwSaveAll("Slova smazána.");
+      document.getElementById("kw-bulk-select").checked = false;
+    };
+
+    // Uložit vše do Firebase
+    function kwSaveAll(msg) {
+      fetch(KW_FIREBASE_URL, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(kwData)
+      }).then(() => { kwStatus(msg); kwRenderTable(); });
+    }
+
+    // INIT
+    kwLoadTable();
+
+   const EX_FIREBASE_URL = "https://poptavky-b6fa1-default-rtdb.europe-west1.firebasedatabase.app/excluded.json";
+const EX_STATS_URL = "https://poptavky-b6fa1-default-rtdb.europe-west1.firebasedatabase.app/exstats.json";
+let exData = [];
+let exStats = {};
+let exEditingIndex = null;
+let exSortAsc = true;
+let exSortByCount = false;
+
+function exStatus(msg, err) {
+  const el = document.getElementById("ex-admin-status");
+  el.style.color = err ? "#e63e3e" : "#1976d2";
+  el.textContent = msg;
+  setTimeout(() => { el.textContent = ""; }, 1800);
+}
+
+function exLoadStats(cb) {
+  fetch(EX_STATS_URL).then(r => r.json()).then(obj => {
+    exStats = obj || {};
+    if (cb) cb();
+  });
+}
+
+function exLoadTable() {
+  fetch(EX_FIREBASE_URL).then(r => r.json()).then(arr => {
+    if (!Array.isArray(arr)) arr = [];
+    exData = arr;
+    exEditingIndex = null;
+    exLoadStats(exRenderTable); // nejdřív načti stats a pak renderuj
+  });
+}
+
+function exRenderTable() {
+  const rows = document.getElementById("ex-table-rows");
+  const bulkBtn = document.getElementById("ex-bulk-delete-btn");
+  const filterVal = document.getElementById("ex-filter").value.trim().toLowerCase();
+
+  let data = exData.map((w, i) => ({
+    w,
+    i,
+    count: (exStats && typeof exStats[w] !== "undefined") ? exStats[w] : 0
+  }))
+    .filter(obj => !filterVal || obj.w.toLowerCase().includes(filterVal));
+
+  // --- Řazení ---
+  if (exSortByCount) {
+    data = data.sort((a, b) => exSortAsc ? (a.count - b.count) : (b.count - a.count));
+  } else {
+    data = data.sort((a, b) => {
+      const cmp = a.w.localeCompare(b.w, "cs", { sensitivity: "base" });
+      return exSortAsc ? cmp : -cmp;
+    });
+  }
+
+  let html = data.map(({ w, i, count }) => `
+    <div class="kw-table-row${exEditingIndex === i ? " editing" : ""}">
+      <input type="checkbox" class="kw-table-select" data-i="${i}">
+      <div class="kw-table-cell" style="display:flex;align-items:center;gap:8px;">
+        ${
+          exEditingIndex === i
+            ? `<input class="kw-table-input" id="ex-edit-input" value="${w.replace(/"/g, '&quot;')}">`
+            : `<span>${w}</span>`
+        }
+      </div>
+      <div class="kw-table-actions-vertical">
+        ${
+          exEditingIndex === i
+          ? `
+            <button class="kw-icon-btn" title="Uložit" data-action="save" data-i="${i}">
+              <svg class="kw-icon" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#1c932c" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
+            </button>
+            <button class="kw-icon-btn" title="Zrušit" data-action="cancel" data-i="${i}">
+              <svg class="kw-icon" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke="#b3b3b3" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+            </button>
+          `
+          : `
+            <button class="kw-icon-btn" title="Upravit" data-action="edit" data-i="${i}">
+              <svg class="kw-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z" /></svg>
+            </button>
+            <button class="kw-icon-btn" title="Smazat" data-action="delete" data-i="${i}">
+              <svg class="kw-icon" viewBox="0 0 24 24"><path d="M6 19a2 2 0 002 2h8a2 2 0 002-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" fill="#e63e3e"/></svg>
+            </button>
+          `
+        }
+      </div>
+      <div class="kw-table-cell" style="min-width:42px;text-align:right;">${count || 0}</div>
+    </div>
+  `).join("");
+  rows.innerHTML = html;
+
+  let selCount = document.querySelectorAll('#ex-table-rows .kw-table-select:checked').length;
+  bulkBtn.style.display = selCount ? "" : "none";
+}
+
+// Přidat novou frázi
+document.getElementById("ex-add-btn").onclick = function () {
+  let val = document.getElementById("ex-add-input").value.trim();
+  if (!val) return;
+  if (exData.includes(val)) return exStatus("Tato fráze už existuje!", true);
+  exData.push(val);
+  exSaveAll("Fráze přidána.");
+  document.getElementById("ex-add-input").value = "";
+};
+
+// Inline editace, mazání, uložení, cancel, bulk delete
+document.getElementById("ex-table-rows").onclick = function (e) {
+  const btn = e.target.closest("button.kw-icon-btn");
+  if (!btn) return;
+  const idx = parseInt(btn.dataset.i);
+  const action = btn.dataset.action;
+  if (action === "edit") {
+    exEditingIndex = idx; exRenderTable();
+    setTimeout(() => { document.getElementById("ex-edit-input").focus(); }, 50);
+  }
+  if (action === "delete") {
+    if (confirm("Opravdu smazat tuto frázi?")) {
+      exData.splice(idx, 1);
+      exSaveAll("Fráze smazána.");
+    }
+  }
+  if (action === "save") {
+    const val = document.getElementById("ex-edit-input").value.trim();
+    if (!val) return;
+    if (exData.includes(val)) return exStatus("Tato fráze už existuje!", true);
+    exData[idx] = val;
+    exEditingIndex = null;
+    exSaveAll("Fráze upravena.");
+  }
+  if (action === "cancel") {
+    exEditingIndex = null; exRenderTable();
+  }
+};
+// Enter při editaci
+document.getElementById("ex-table-rows").addEventListener("keydown", function (e) {
+  if (e.target.id === "ex-edit-input" && e.key === "Enter") {
+    document.querySelector('#ex-table-rows [data-action="save"]').click();
+  }
+});
+
+// Řazení klikem na záhlaví
+document.getElementById("ex-sort-th").onclick = function () {
+  if (!exSortByCount) {
+    exSortAsc = !exSortAsc;
+  } else {
+    exSortByCount = false;
+    exSortAsc = true;
+  }
+  document.getElementById("ex-sort-arrow").textContent = exSortAsc ? "↑" : "↓";
+  document.getElementById("ex-sort-count-arrow").textContent = "";
+  exRenderTable();
+};
+// Řazení dle výskytů
+document.getElementById("ex-sort-count-th").onclick = function () {
+  if (exSortByCount) {
+    exSortAsc = !exSortAsc;
+  } else {
+    exSortByCount = true;
+    exSortAsc = false;
+  }
+  document.getElementById("ex-sort-count-arrow").textContent = exSortAsc ? "↑" : "↓";
+  document.getElementById("ex-sort-arrow").textContent = "";
+  exRenderTable();
+};
+
+// Filtrování
+document.getElementById("ex-filter").oninput = function () {
+  exRenderTable();
+};
+
+// Výběr všech pro bulk
+document.getElementById("ex-bulk-select").onchange = function () {
+  document.querySelectorAll('#ex-table-rows .kw-table-select').forEach(cb => cb.checked = this.checked);
+  document.getElementById('ex-bulk-delete-btn').style.display = this.checked ? "" : "none";
+};
+
+// Bulk mazání
+document.getElementById("ex-bulk-delete-btn").onclick = function () {
+  if (!confirm("Opravdu smazat vybrané fráze?")) return;
+  let sel = Array.from(document.querySelectorAll('#ex-table-rows .kw-table-select:checked')).map(cb => parseInt(cb.dataset.i));
+  exData = exData.filter((_, i) => !sel.includes(i));
+  exSaveAll("Fráze smazány.");
+  document.getElementById("ex-bulk-select").checked = false;
+};
+
+// Uložit vše do Firebase
+function exSaveAll(msg) {
+  fetch(EX_FIREBASE_URL, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(exData)
+  }).then(() => { exStatus(msg); exRenderTable(); });
+}
+
+// INIT po otevření modalu
+function exShowModal() {
+  document.getElementById("excluded-modal").style.display = "flex";
+  exLoadTable();
+}
+document.getElementById("show-excluded-btn").onclick = exShowModal;
+document.getElementById("close-excluded-modal").onclick = () => hideModal("excluded-modal");
 
 
     const FIREBASE_URL = "https://poptavky-b6fa1-default-rtdb.europe-west1.firebasedatabase.app/poptavky.json";
