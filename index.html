@@ -899,23 +899,8 @@
     });
   });
 }
-
-let deferredPrompt;
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  // Ukázat vlastní tlačítko "Přidat aplikaci"
-  const btn = document.createElement('button');
-  btn.textContent = 'Přidat aplikaci na plochu';
-  btn.className = 'filter-btn';
-  btn.onclick = () => {
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(() => {
-      btn.remove();
-    });
-  };
-  document.body.appendChild(btn);
-});
+ 
+ 
 function subscribeUserToPush() {
   if (!('serviceWorker' in navigator)) return;
   navigator.serviceWorker.ready.then(reg => {
@@ -1624,6 +1609,22 @@ document.getElementById("close-excluded-modal").onclick = () => hideModal("exclu
         }
       }
     }
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  // zobrazit tlačítko uživateli:
+  const btn = document.createElement('button');
+  btn.textContent = 'Přidat aplikaci na plochu';
+  btn.className = 'filter-btn';
+  btn.onclick = () => {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult) => {
+      btn.remove();
+    });
+  };
+  document.body.appendChild(btn);
+});
 
   </script>
 </body>
