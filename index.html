@@ -4,6 +4,12 @@
 <head>
   <meta charset="UTF-8">
   <title>📋 Facebook Poptávky</title>
+    <meta name="theme-color" content="#1976D2">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -804,6 +810,8 @@
             title="Doba">local_offer</span> Vyloučené fráze</button>
 
       </li>
+      <button onclick="subscribeUserToPush()" class="filter-btn">Povolit notifikace</button>
+
     </ul>
   </div>
   <!-- Modal pro klíčová slova -->
@@ -882,7 +890,50 @@
 
   <div id="run-log"></div>
   <div id="posts">Načítám...</div>
-  <script>function showModal(id, fetchFn) {
+  
+  <script>
+    if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').then(function(reg) {
+      // console.log('SW registered', reg);
+    });
+  });
+}
+
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  // Ukázat vlastní tlačítko "Přidat aplikaci"
+  const btn = document.createElement('button');
+  btn.textContent = 'Přidat aplikaci na plochu';
+  btn.className = 'filter-btn';
+  btn.onclick = () => {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(() => {
+      btn.remove();
+    });
+  };
+  document.body.appendChild(btn);
+});
+function subscribeUserToPush() {
+  if (!('serviceWorker' in navigator)) return;
+  navigator.serviceWorker.ready.then(reg => {
+    Notification.requestPermission().then(permission => {
+      if (permission !== 'granted') return alert('Notifikace zakázány');
+      reg.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: '<TVŮJ PUBLIC VAPID KLÍČ base64>'
+      }).then(sub => {
+        // Ulož sub na server (např. do Firebase nebo vlastní API)
+        // fetch('/api/save-sub', {method:'POST',body:JSON.stringify(sub),headers:{'Content-Type':'application/json'}});
+        alert('Notifikace povoleny!');
+      }).catch(console.error);
+    });
+  });
+}
+
+function showModal(id, fetchFn) {
       document.getElementById(id).style.display = "flex";
       if (fetchFn) fetchFn();
     }
