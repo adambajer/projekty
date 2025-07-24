@@ -1527,10 +1527,17 @@ document.getElementById("close-excluded-modal").onclick = () => hideModal("exclu
             </a>
           </div>
           <div class="card-body">${extractCleanText(post.text || "")}</div>
+             ${(post.matchedKeyword || post.matchedExcluded) ? `
+      <div class="chips-box" style="margin-bottom:7px;">
+        ${post.matchedKeyword ? `<span class="kw-chip" title="Toto klíčové slovo rozhodlo o zařazení">${post.matchedKeyword}</span>` : ""}
+        ${post.matchedExcluded ? `<span class="ex-chip" title="Tato fráze rozhodla o zařazení">${post.matchedExcluded}</span>` : ""}
+      </div>
+    ` : ""}
           <div class="comments-list" id="${commentsId}">
             <span style="color:#bbb;">Načítám komentáře...</span>
           </div>
           <div class="card-footer">
+            
             <input type="text" placeholder="Komentář..." class="comment-input" id="input_${post._id}">
             <button class="add-comment-btn" id="btn_${post._id}" disabled>Odeslat</button>
           </div>
