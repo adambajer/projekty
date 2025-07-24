@@ -3,7 +3,7 @@ self.addEventListener('install', e => {
   self.skipWaiting();
   e.waitUntil(
     caches.open('v1').then(cache =>
-      cache.addAll(['/', '/index.html', '/favicon.ico', '/manifest.json'])
+      cache.addAll(['/', '/index.html', '/favicon.ico', '/site.webmanifest'])
     )
   );
 });
