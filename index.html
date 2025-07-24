@@ -786,7 +786,34 @@
 
     #kw-add-btn:hover {
       background: #1458a8 !important;
-    }
+    }.checkmark-btn {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  background: transparent;
+  border: 1.7px solid #c6c6c6;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 6px #0001;
+  transition: background 0.18s, border 0.18s, color 0.2s;
+  color: #c6c6c6;
+  cursor: pointer;
+  z-index: 5;
+}
+.checkmark-btn.checked {
+  background: #d4f5d6 !important;
+  border-color: #44c95c !important;
+  color: #22a83d !important;
+}
+.checkmark-btn .material-icons {
+  font-size: 1.7em;
+  pointer-events: none;
+}
+
   </style>
 </head>
 
@@ -1462,160 +1489,128 @@ document.getElementById("close-excluded-modal").onclick = () => hideModal("exclu
     switchTab("poptavky");
 
 
-    function renderPosts(data) {
-      const container = document.getElementById('posts');
-      if (!data) {
-        container.innerHTML = '<div style="color:#999">Žádné příspěvky...</div>';
-        return;
-      }
-      const timelineColors = [
-        '#1976d2', '#e96458', '#27b36a', '#e4a600', '#9562e6'
-      ];
-      const items = Object.entries(data)
-        .map(([id, post]) => ({ ...post, _id: id }))
-        .map(post => {
-          let dt = extractPostDate(post.text || "");
-          post._dateObj = dt;
-          post._dateStr = dt
-            ? dt.toLocaleDateString('cs-CZ', { year: 'numeric', month: '2-digit', day: '2-digit' })
-            : 'Neznámé datum';
-          return post;
-        })
-        .sort((a, b) => {
-          if (!a._dateObj && !b._dateObj) return 0;
-          if (!a._dateObj) return 1;
-          if (!b._dateObj) return -1;
-          return b._dateObj - a._dateObj;
-        });
+   function renderPosts(data) {
+  const container = document.getElementById('posts');
+  if (!data) {
+    container.innerHTML = '<div style="color:#999">Žádné příspěvky...</div>';
+    return;
+  }
+  const timelineColors = [
+    '#1976d2', '#e96458', '#27b36a', '#e4a600', '#9562e6'
+  ];
+  const items = Object.entries(data)
+    .map(([id, post]) => ({ ...post, _id: id }))
+    .map(post => {
+      let dt = extractPostDate(post.text || "");
+      post._dateObj = dt;
+      post._dateStr = dt
+        ? dt.toLocaleDateString('cs-CZ', { year: 'numeric', month: '2-digit', day: '2-digit' })
+        : 'Neznámé datum';
+      return post;
+    })
+    .sort((a, b) => {
+      if (!a._dateObj && !b._dateObj) return 0;
+      if (!a._dateObj) return 1;
+      if (!b._dateObj) return -1;
+      return b._dateObj - a._dateObj;
+    });
 
-      let days = {};
-      for (const post of items) {
-        const key = post._dateStr;
-        if (!days[key]) days[key] = [];
-        days[key].push(post);
-      }
-      let html = '';
-      let colorIdx = 0;
+  let days = {};
+  for (const post of items) {
+    const key = post._dateStr;
+    if (!days[key]) days[key] = [];
+    days[key].push(post);
+  }
+  let html = '';
+  let colorIdx = 0;
 
-      for (const day of Object.keys(days)) {
-        const color = timelineColors[colorIdx % timelineColors.length];
+  for (const day of Object.keys(days)) {
+    const color = timelineColors[colorIdx % timelineColors.length];
 
-        // Timeline: čára + jedna velká tečka + datum vedle
-        let timelineHtml = `<div class="timeline" style="--primary:${color};">
+    let timelineHtml = `<div class="timeline" style="--primary:${color};">
       <div class="timeline-line"></div>
       <div class="timeline-dot"></div>
     </div>`;
 
-        let cardsHtml = `<div class="cards-day">    `;
-        for (const post of days[day]) {
-          let realDate = post._dateObj;
-          let showTime = extractOnlyTime(realDate);
-          const commentsId = "comments_" + post._id;
-          cardsHtml += `
-          
-        <div class="card" id="post_${post._id}">
-          <div class="card-header">
-            <div class="card-time">${showTime}</div>
-            <span class="material-icons profil" title="Profil">person</span>
-            ${post.userUrl
-              ? `<a href="${post.userUrl}" target="_blank" class="user-link" title="${post.author || "Neznámý"}">${post.author || "Neznámý"}</a>`
-              : `<span class="user-link" style="color:#aaa;pointer-events:none;" title="${post.author || "Neznámý"}">${post.author || "Neznámý"}</span>`
-            }
-            <span class="material-icons comment-toggle" title="Přidat komentář">chat_bubble_outline</span>
-            <a href="${post.url}" target="_blank" class="post-link" title="Otevřít příspěvek">
-              <span class="material-icons openinnew">open_in_new</span>
-            </a>
-          </div>
-          <div class="card-body">${extractCleanText(post.text || "")}</div>
-             ${(post.matchedKeyword || post.matchedExcluded) ? `
-      <div class="chips-box" style="margin-bottom:7px;">
-        ${post.matchedKeyword ? `<span class="kw-chip" title="Toto klíčové slovo rozhodlo o zařazení">${post.matchedKeyword}</span>` : ""}
-        ${post.matchedExcluded ? `<span class="ex-chip" title="Tato fráze rozhodla o zařazení">${post.matchedExcluded}</span>` : ""}
-      </div>
-    ` : ""}
-          <div class="comments-list" id="${commentsId}">
-            <span style="color:#bbb;">Načítám komentáře...</span>
-          </div>
-          <div class="card-footer">
-            
-            <input type="text" placeholder="Komentář..." class="comment-input" id="input_${post._id}">
-            <button class="add-comment-btn" id="btn_${post._id}" disabled>Odeslat</button>
-          </div>
+    let cardsHtml = `<div class="cards-day">    `;
+    for (const post of days[day]) {
+      let realDate = post._dateObj;
+      let showTime = extractOnlyTime(realDate);
+
+      // Fajfka stav
+      const isChecked = !!post.checkedTime;
+      const checkedClass = isChecked ? "checked" : "";
+      const checkedTimeStr = isChecked
+        ? new Date(post.checkedTime).toLocaleString('cs-CZ', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+        : "";
+
+      cardsHtml += `
+      <div class="card" id="post_${post._id}">
+        <div class="card-header">
+          <div class="card-time">${showTime}</div>
+          <span class="material-icons profil" title="Profil">person</span>
+          ${post.userUrl
+            ? `<a href="${post.userUrl}" target="_blank" class="user-link" title="${post.author || "Neznámý"}">${post.author || "Neznámý"}</a>`
+            : `<span class="user-link" style="color:#aaa;pointer-events:none;" title="${post.author || "Neznámý"}">${post.author || "Neznámý"}</span>`
+          }
+          <a href="${post.url}" target="_blank" class="post-link" title="Otevřít příspěvek">
+            <span class="material-icons openinnew">open_in_new</span>
+          </a>
         </div>
-      `;
-        }
-        cardsHtml += '</div>';
-
-        html += ` <span class="timeline-date    "  style="--primary:${color};--primary-dark:${color};">${day}</span> 
-      <div class="day-row" style="--primary:${color};--primary-dark:${color};">
-        
-        ${timelineHtml}
-        ${cardsHtml}
+        <div class="card-body">${extractCleanText(post.text || "")}</div>
+        ${(post.matchedKeyword || post.matchedExcluded) ? `
+        <div class="chips-box" style="margin-bottom:7px;">
+          ${post.matchedKeyword ? `<span class="kw-chip" title="Toto klíčové slovo rozhodlo o zařazení">${post.matchedKeyword}</span>` : ""}
+          ${post.matchedExcluded ? `<span class="ex-chip" title="Tato fráze rozhodla o zařazení">${post.matchedExcluded}</span>` : ""}
+        </div>
+        ` : ""}
+        <button class="checkmark-btn ${checkedClass}" id="chk_${post._id}" title="${isChecked ? `Označeno: ${checkedTimeStr}\nKlikni pro zrušení` : 'Označit jako vyřízené'}">
+          <span class="material-icons">done</span>
+        </button>
       </div>
-    `;
-        colorIdx++;
-      }
+      `;
+    }
+    cardsHtml += '</div>';
 
-      container.innerHTML = html;
+    html += ` <span class="timeline-date    "  style="--primary:${color};--primary-dark:${color};">${day}</span> 
+    <div class="day-row" style="--primary:${color};--primary-dark:${color};">
+      ${timelineHtml}
+      ${cardsHtml}
+    </div>
+  `;
+    colorIdx++;
+  }
 
-      // --- ZBYTEK TVÉHO KÓDU NA KOMENTÁŘE ---
-      for (const day of Object.keys(days)) {
-        for (const post of days[day]) {
-          const commentsId = "comments_" + post._id;
-          fetchComments(post._id, (comments) => {
-            const el = document.getElementById(commentsId);
-            if (!comments) {
-              el.innerHTML = '<span style="color:#bbb;">(Žádné komentáře)</span>';
-              return;
-            }
-            el.innerHTML = Object.values(comments).map(c => `
-          <div class="comment-item">
-            ${c.text}
-            <span class="comment-date">${new Date(c.time).toLocaleString('cs-CZ', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
-          </div>
-        `).join('');
-          });
+  container.innerHTML = html;
 
-          setTimeout(() => {
-            const card = document.getElementById(`post_${post._id}`);
-            const input = card.querySelector(`.comment-input`);
-            const btn = card.querySelector(`.add-comment-btn`);
-            const footer = card.querySelector(`.card-footer`);
-            const commentsDiv = card.querySelector(`.comments-list`);
-            const toggle = card.querySelector(`.comment-toggle`);
-            toggle.addEventListener('click', () => {
-              footer.classList.toggle('active');
-              commentsDiv.classList.toggle('active');
-              if (footer.classList.contains('active')) input.focus();
-            });
-            input.addEventListener('input', () => {
-              btn.disabled = !input.value.trim();
-            });
-            btn.addEventListener('click', () => {
-              if (!input.value.trim()) return;
-              btn.disabled = true;
-              addComment(post._id, input.value.trim(), () => {
-                input.value = "";
-                btn.disabled = false;
-                fetchComments(post._id, (comments) => {
-                  const el = card.querySelector(`.comments-list`);
-                  if (!comments) {
-                    el.innerHTML = '<span style="color:#bbb;">(Žádné komentáře)</span>';
-                    return;
-                  }
-                  el.innerHTML = Object.values(comments).map(c => `
-                <div class="comment-item">
-                  ${c.text}
-                  <span class="comment-date">${new Date(c.time).toLocaleString('cs-CZ', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
-                </div>
-              `).join('');
-                });
-              });
-            });
-          }, 10);
-        }
+  // Nastavit funkci na fajfku na všech kartách
+  for (const day of Object.keys(days)) {
+    for (const post of days[day]) {
+      const btn = document.getElementById(`chk_${post._id}`);
+      if (!btn) continue;
+      btn.onclick = function () {
+        const isNowChecked = !btn.classList.contains('checked');
+        let checkedTime = isNowChecked ? new Date().toISOString() : null;
+
+        // Ulož do Firebase, použij aktuální branch!
+        fetch(`https://poptavky-b6fa1-default-rtdb.europe-west1.firebasedatabase.app/${CURRENT_BRANCH}/${post._id}/checkedTime.json`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(checkedTime)
+        }).then(() => {
+          // Po uložení refreshni pouze fajfku
+          btn.classList.toggle('checked', isNowChecked);
+          if (isNowChecked) {
+            btn.title = `Označeno: ${new Date(checkedTime).toLocaleString('cs-CZ', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}\nKlikni pro zrušení`;
+          } else {
+            btn.title = "Označit jako vyřízené";
+          }
+        });
       }
     }
+  }
+}
+
 let deferredPrompt;
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
