@@ -1755,16 +1755,18 @@
           
         </div>
         <div class="card-body">${extractCleanText(post.text || "")}</div>
+         <div class="chips-box" style="margin-bottom:7px;">
         ${(post.matchedKeyword || post.matchedExcluded) ? `
-        <div class="chips-box" style="margin-bottom:7px;">
+       
           ${post.matchedKeyword ? `<span class="kw-chip" title="Toto klíčové slovo rozhodlo o zařazení">${post.matchedKeyword}</span>` : ""}
           ${post.matchedExcluded ? `<span class="ex-chip" title="Tato fráze rozhodla o zařazení">${post.matchedExcluded}</span>` : ""}
-            <span class="material-icons group-icon" style="color:${groupColor};" title="${group ? group.name : post.groupId}">groups</span>
+          ${group ? `<span class="material-icons" style="color:${groupColor};" title="${groupName}">groups</span>` : ""}
             <button class="checkmark-btn ${checkedClass}" id="chk_${post._id}" title="${isChecked ? `Označeno: ${checkedTimeStr}\nKlikni pro zrušení` : 'Označit jako vyřízené'}">
           <span class="material-icons">done</span>
         </button>
-        </div>
+        
         ` : ""}
+        </div>
         
       
       </div>
