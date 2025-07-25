@@ -147,7 +147,7 @@
     .card {
       display: block;
       break-inside: avoid;
-      padding: 1rem;
+      padding: 0.5rem;
       /* border: 1px solid #ccc;  <-- SMAŽ! */
       box-shadow: 0 0 0 1px #ccc;
       background: #fff;
@@ -821,6 +821,9 @@
       font-size: 1.7em;
       pointer-events: none;
     }
+    .group-icon {
+    
+    padding: 0.37em;}
   </style>
 </head>
 
@@ -1756,7 +1759,7 @@
         <div class="chips-box" style="margin-bottom:7px;">
           ${post.matchedKeyword ? `<span class="kw-chip" title="Toto klíčové slovo rozhodlo o zařazení">${post.matchedKeyword}</span>` : ""}
           ${post.matchedExcluded ? `<span class="ex-chip" title="Tato fráze rozhodla o zařazení">${post.matchedExcluded}</span>` : ""}
-            <span class="material-icons" style="color:${groupColor};" title="${group ? group.name : post.groupId}">groups</span>
+            <span class="material-icons group-icon" style="color:${groupColor};" title="${group ? group.name : post.groupId}">groups</span>
             <button class="checkmark-btn ${checkedClass}" id="chk_${post._id}" title="${isChecked ? `Označeno: ${checkedTimeStr}\nKlikni pro zrušení` : 'Označit jako vyřízené'}">
           <span class="material-icons">done</span>
         </button>
