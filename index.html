@@ -400,16 +400,16 @@
     }
 
     .filter-btn {
-      font-size: 1.04em;
-      padding: 0.42em 1.5em;
-      border-radius: 1.5em;
-      border: 1px solid #d1d7e2;
-      background: #e3f1ff;
-      color: #144e7a;
-      font-weight: 600;
-      cursor: pointer;
-      margin-right: 0.7em;
-      transition: background 0.13s, color 0.13s, border 0.13s;
+          font-size: 1.04em;
+    padding: 0.3em;
+    /* border-radius: 1.5em; */
+    border: 1px solid #d1d7e2;
+    /* background: #e3f1ff; */
+    color: #144e7a;
+    /* font-weight: 600; */
+    cursor: pointer;
+    margin-right: 0.7em;
+    transition: background 0.13s, color 0.13s, border 0.13s;
     }
 
     .filter-btn:last-child {
@@ -699,17 +699,16 @@
     }
 
     .kw-table-input {
-      width: 92%;
+  
       padding: 4px 8px;
       font-size: 1em;
       border: 1px solid #e4e7ef;
-      border-radius: 6px;
-      background: #f7fafb;
+      border-radius: 6px; 
     }
 
     .kw-table-filter {
       margin-bottom: 0.8em;
-      width: 100%;
+      
       max-width: 260px;
       padding: 6px 1em;
       border-radius: 10px;
@@ -745,9 +744,7 @@
       opacity: 0.7;
       border-radius: 6px;
       transition: opacity .13s, background .13s;
-      line-height: 1;
-      width: 22px;
-      height: 22px;
+      line-height: 1; 
       display: flex;
       align-items: center;
       justify-content: center;
@@ -759,13 +756,11 @@
     }
 
     .kw-table-input,
-    #kw-add-input {
-      width: 92%;
+    #kw-add-input { 
       padding: 4px 8px;
       font-size: 1em;
       border: 1px solid #e4e7ef;
-      border-radius: 6px;
-      background: #f7fafb;
+      border-radius: 6px; 
     }
 
     #kw-add-btn {
@@ -781,6 +776,7 @@
       display: flex;
       align-items: center;
       gap: 0.6em;
+      padding: 1rem;;
       transition: background 0.18s;
     }
 
@@ -793,8 +789,8 @@
   background: transparent;
   border: 1.7px solid #c6c6c6;
   border-radius: 50%;
-  width: 38px;
-  height: 38px;
+  width: 18px;
+  height: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -830,11 +826,11 @@
         <a class="nav-link" data-branch="jine" href="#">Ostatní</a>
       </li>
       <li class="nav-item"> <button id="show-keywords-btn" class="filter-btn"><span class="material-icons"
-            title="Doba">done_all</span> Klíčová slova</button>
+            title="Doba">done_all</span> Poptávky slova</button>
 
       </li>
       <li class="nav-item"> <button id="show-excluded-btn" class="filter-btn"><span class="material-icons"
-            title="Doba">local_offer</span> Vyloučené fráze</button>
+            title="Doba">local_offer</span> Nabídky slova</button>
 
       </li>
       <button onclick="subscribeUserToPush()" class="filter-btn">Povolit notifikace</button>
@@ -971,7 +967,7 @@ function showModal(id, fetchFn) {
     });
 
     // Pokud používáš modal, vždy zavolej renderKeywordsTable() při otevření modalu s tabulkou.
-    const KW_FIREBASE_URL = "https://poptavky-b6fa1-default-rtdb.europe-west1.firebasedatabase.app/keywords.json";
+    const KW_FIREBASE_URL = "https://poptavky-59312-default-rtdb.europe-west1.firebasedatabase.app/keywords.json";
     let kwData = [];
     let editingIndex = null;
 
@@ -993,7 +989,7 @@ function showModal(id, fetchFn) {
       });
     }
 
-    const KW_STATS_URL = "https://poptavky-b6fa1-default-rtdb.europe-west1.firebasedatabase.app/kwstats.json";
+    const KW_STATS_URL = "https://poptavky-59312-default-rtdb.europe-west1.firebasedatabase.app/kwstats.json";
     let kwStats = {};
     let kwSortByCount = false; // nové, pro řazení podle počtu výskytů
 
@@ -1086,10 +1082,12 @@ rows.innerHTML = html;
         setTimeout(() => { document.getElementById("kw-edit-input").focus(); }, 50);
       }
       if (action === "delete") {
-        if (confirm("Opravdu smazat toto slovo?")) {
-          kwData.splice(idx, 1);
-          kwSaveAll("Slovo smazáno.");
-        }
+        kwData.splice(idx, 1);
+         kwSaveAll("Slovo smazáno.");
+        /*if (confirm("Opravdu smazat toto slovo?")) {
+          
+         
+        }*/
       }
       if (action === "save") {
         const val = document.getElementById("kw-edit-input").value.trim();
@@ -1173,8 +1171,8 @@ rows.innerHTML = html;
     // INIT
     kwLoadTable();
 
-   const EX_FIREBASE_URL = "https://poptavky-b6fa1-default-rtdb.europe-west1.firebasedatabase.app/excluded.json";
-const EX_STATS_URL = "https://poptavky-b6fa1-default-rtdb.europe-west1.firebasedatabase.app/exstats.json";
+   const EX_FIREBASE_URL = "https://poptavky-59312-default-rtdb.europe-west1.firebasedatabase.app/excluded.json";
+const EX_STATS_URL = "https://poptavky-59312-default-rtdb.europe-west1.firebasedatabase.app/exstats.json";
 let exData = [];
 let exStats = {};
 let exEditingIndex = null;
@@ -1374,12 +1372,12 @@ document.getElementById("show-excluded-btn").onclick = exShowModal;
 document.getElementById("close-excluded-modal").onclick = () => hideModal("excluded-modal");
 
 
-    const FIREBASE_URL = "https://poptavky-b6fa1-default-rtdb.europe-west1.firebasedatabase.app/poptavky.json";
+    const FIREBASE_URL = "https://poptavky-59312-default-rtdb.europe-west1.firebasedatabase.app/poptavky.json";
     let CURRENT_BRANCH = "poptavky";
 
     function switchTab(branch) {
       CURRENT_BRANCH = branch;
-      const FIREBASE_URL = `https://poptavky-b6fa1-default-rtdb.europe-west1.firebasedatabase.app/${branch}.json`;
+      const FIREBASE_URL = `https://poptavky-59312-default-rtdb.europe-west1.firebasedatabase.app/${branch}.json`;
       document.getElementById('posts').innerHTML = "Načítám...";
       fetch(FIREBASE_URL)
         .then(resp => resp.json())
@@ -1412,7 +1410,7 @@ document.getElementById("close-excluded-modal").onclick = () => hideModal("exclu
         ["noKey", "Bez klíče", "<span class='material-icons' title='Bez klíče'>vpn_key_off</span>"],
         ["noUrl", "Bez URL", "<span class='material-icons' title='Bez URL'>link_off</span>"],
       ];
-      fetch("https://poptavky-b6fa1-default-rtdb.europe-west1.firebasedatabase.app/runs.json")
+      fetch("https://poptavky-59312-default-rtdb.europe-west1.firebasedatabase.app/runs.json")
         .then(r => r.json())
         .then(data => {
           if (!data) return;
@@ -1468,7 +1466,7 @@ document.getElementById("close-excluded-modal").onclick = () => hideModal("exclu
     }
 
     function fetchComments(postId, cb) {
-      fetch(`https://poptavky-b6fa1-default-rtdb.europe-west1.firebasedatabase.app/poptavky/${postId}/comments.json`)
+      fetch(`https://poptavky-59312-default-rtdb.europe-west1.firebasedatabase.app/poptavky/${postId}/comments.json`)
         .then(resp => resp.json())
         .then(comments => cb(comments))
         .catch(() => cb(null));
@@ -1479,7 +1477,7 @@ document.getElementById("close-excluded-modal").onclick = () => hideModal("exclu
         text,
         time: new Date().toISOString()
       };
-      fetch(`https://poptavky-b6fa1-default-rtdb.europe-west1.firebasedatabase.app/poptavky/${postId}/comments.json`, {
+      fetch(`https://poptavky-59312-default-rtdb.europe-west1.firebasedatabase.app/poptavky/${postId}/comments.json`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(commentObj)
@@ -1593,7 +1591,7 @@ document.getElementById("close-excluded-modal").onclick = () => hideModal("exclu
         let checkedTime = isNowChecked ? new Date().toISOString() : null;
 
         // Ulož do Firebase, použij aktuální branch!
-        fetch(`https://poptavky-b6fa1-default-rtdb.europe-west1.firebasedatabase.app/${CURRENT_BRANCH}/${post._id}/checkedTime.json`, {
+        fetch(`https://poptavky-59312-default-rtdb.europe-west1.firebasedatabase.app/${CURRENT_BRANCH}/${post._id}/checkedTime.json`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(checkedTime)
