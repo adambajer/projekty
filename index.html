@@ -4,12 +4,12 @@
 <head>
   <meta charset="UTF-8">
   <title>📋 Facebook Poptávky</title>
-    <meta name="theme-color" content="#1976D2">
-    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<link rel="shortcut icon" href="/favicon.ico" />
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-<link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#1976D2">
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -400,16 +400,16 @@
     }
 
     .filter-btn {
-          font-size: 1.04em;
-    padding: 0.3em;
-    /* border-radius: 1.5em; */
-    border: 1px solid #d1d7e2;
-    /* background: #e3f1ff; */
-    color: #144e7a;
-    /* font-weight: 600; */
-    cursor: pointer;
-    margin-right: 0.7em;
-    transition: background 0.13s, color 0.13s, border 0.13s;
+      font-size: 1.04em;
+      padding: 0.3em;
+      /* border-radius: 1.5em; */
+      border: 1px solid #d1d7e2;
+      /* background: #e3f1ff; */
+      color: #144e7a;
+      /* font-weight: 600; */
+      cursor: pointer;
+      margin-right: 0.7em;
+      transition: background 0.13s, color 0.13s, border 0.13s;
     }
 
     .filter-btn:last-child {
@@ -699,16 +699,16 @@
     }
 
     .kw-table-input {
-  
+
       padding: 4px 8px;
       font-size: 1em;
       border: 1px solid #e4e7ef;
-      border-radius: 6px; 
+      border-radius: 6px;
     }
 
     .kw-table-filter {
       margin-bottom: 0.8em;
-      
+
       max-width: 260px;
       padding: 6px 1em;
       border-radius: 10px;
@@ -744,7 +744,7 @@
       opacity: 0.7;
       border-radius: 6px;
       transition: opacity .13s, background .13s;
-      line-height: 1; 
+      line-height: 1;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -756,14 +756,19 @@
     }
 
     .kw-table-input,
-    #kw-add-input { 
+    #kw-add-input,
+    #group-add-input,
+    #ex-add-input {
       padding: 4px 8px;
       font-size: 1em;
       border: 1px solid #e4e7ef;
-      border-radius: 6px; 
+      border-radius: 6px;
+      width: -webkit-fill-available;
     }
 
-    #kw-add-btn {
+    #kw-add-btn,
+    #group-add-btn,
+    #ex-add-btn {
       background: #1976d2 !important;
       color: #fff !important;
       border: none;
@@ -776,40 +781,46 @@
       display: flex;
       align-items: center;
       gap: 0.6em;
-      padding: 1rem;;
+      padding: 1rem;
+      ;
       transition: background 0.18s;
     }
 
-    #kw-add-btn:hover {
+    #kw-add-btn:hover,
+    #group-add-btn:hover,
+    #ex-add-btn:hover {
       background: #1458a8 !important;
-    }.checkmark-btn {
-  position: absolute;
-  right: 12px;
-  bottom: 10px;
-  background: transparent;
-  border: 1.7px solid #c6c6c6;
-  border-radius: 50%;
-  width: 18px;
-  height: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 1px 6px #0001;
-  transition: background 0.18s, border 0.18s, color 0.2s;
-  color: #c6c6c6;
-  cursor: pointer;
-  z-index: 5;
-}
-.checkmark-btn.checked {
-  background: #d4f5d6 !important;
-  border-color: #44c95c !important;
-  color: #22a83d !important;
-}
-.checkmark-btn .material-icons {
-  font-size: 1.7em;
-  pointer-events: none;
-}
+    }
 
+    .checkmark-btn {
+      position: absolute;
+      right: 12px;
+      bottom: 10px;
+      background: transparent;
+      border: 1.7px solid #c6c6c6;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 1px 6px #0001;
+      transition: background 0.18s, border 0.18s, color 0.2s;
+      color: #c6c6c6;
+      cursor: pointer;
+      z-index: 5;
+    }
+
+    .checkmark-btn.checked {
+      background: #d4f5d6 !important;
+      border-color: #44c95c !important;
+      color: #22a83d !important;
+    }
+
+    .checkmark-btn .material-icons {
+      font-size: 1.7em;
+      pointer-events: none;
+    }
   </style>
 </head>
 
@@ -833,6 +844,12 @@
             title="Doba">local_offer</span> Nabídky slova</button>
 
       </li>
+      <li class="nav-item">
+        <button id="show-groups-btn" class="filter-btn">
+          <span class="material-icons" title="Skupiny">groups</span> Skupiny
+        </button>
+      </li>
+
       <button onclick="subscribeUserToPush()" class="filter-btn">Povolit notifikace</button>
 
     </ul>
@@ -841,7 +858,7 @@
   <div id="keywords-modal" class="custom-modal">
     <div class="modal-content">
       <button class="close-modal" id="close-keywords-modal" title="Zavřít">✕</button>
-      <div class="modal-title">Klíčová slova</div>
+      <div class="modal-title">Poptávky slova</div>
       <div class="kw-table-container">
         <input id="kw-filter" class="kw-table-filter" type="search" placeholder="Filtrovat klíčová slova…">
         <div style="display:flex;gap:8px;margin-bottom:.8em;">
@@ -874,74 +891,242 @@
 
     </div>
   </div>
-<!-- Modal pro vyloučené fráze (TABULKA) -->
-<div id="excluded-modal" class="custom-modal">
-  <div class="modal-content">
-    <button class="close-modal" id="close-excluded-modal" title="Zavřít">✕</button>
-    <div class="modal-title">Vyloučené fráze</div>
-    <div class="kw-table-container">
-      <input id="ex-filter" class="kw-table-filter" type="search" placeholder="Filtrovat fráze…">
-      <div style="display:flex;gap:8px;margin-bottom:.8em;">
-        <input id="ex-add-input" class="kw-table-input" placeholder="Nová fráze…">
-        <button id="ex-add-btn" class="kw-icon-btn" title="Přidat">
-          Přidej
-        </button>
-      </div>
-     <div class="kw-table-headrow">
-  <input type="checkbox" id="ex-bulk-select" class="kw-table-select">
-  <div class="kw-table-cell" style="font-weight:700;cursor:pointer;" id="ex-sort-th">Fráze <span id="ex-sort-arrow" style="font-size:.93em;">↑</span></div>
-  <div class="kw-table-cell" style="font-weight:700;cursor:pointer;text-align:right;" id="ex-sort-count-th">
-    Výskyty <span id="ex-sort-count-arrow" style="font-size:.93em;"></span>
-  </div>
-</div>
+  <!-- Modal pro vyloučené fráze (TABULKA) -->
+  <div id="excluded-modal" class="custom-modal">
+    <div class="modal-content">
+      <button class="close-modal" id="close-excluded-modal" title="Zavřít">✕</button>
+      <div class="modal-title">Nabídky slova</div>
+      <div class="kw-table-container">
+        <input id="ex-filter" class="kw-table-filter" type="search" placeholder="Filtrovat fráze…">
+        <div style="display:flex;gap:8px;margin-bottom:.8em;">
+          <input id="ex-add-input" class="kw-table-input" placeholder="Nová slovo...">
+          <button id="ex-add-btn" class="kw-icon-btn" title="Přidat">
+            Přidej
+          </button>
+        </div>
+        <div class="kw-table-headrow">
+          <input type="checkbox" id="ex-bulk-select" class="kw-table-select">
+          <div class="kw-table-cell" style="font-weight:700;cursor:pointer;" id="ex-sort-th">Fráze <span
+              id="ex-sort-arrow" style="font-size:.93em;">↑</span></div>
+          <div class="kw-table-cell" style="font-weight:700;cursor:pointer;text-align:right;" id="ex-sort-count-th">
+            Výskyty <span id="ex-sort-count-arrow" style="font-size:.93em;"></span>
+          </div>
+        </div>
 
-      <div id="ex-table-rows"></div>
-      <button id="ex-bulk-delete-btn" class="kw-icon-btn" style="margin-top:0.6em;display:none;">
-        <svg class="kw-icon" viewBox="0 0 24 24">
-          <path d="M3 6h18M9 6V4h6v2M8 6v14a2 2 0 002 2h4a2 2 0 002-2V6" stroke="#e63e3e" stroke-width="2"
-            fill="none" />
-        </svg>
-        Smazat vybrané
-      </button>
-      <div id="ex-admin-status" style="margin-top:1em;font-size:.97em;color:#1976d2;"></div>
+        <div id="ex-table-rows"></div>
+        <button id="ex-bulk-delete-btn" class="kw-icon-btn" style="margin-top:0.6em;display:none;">
+          <svg class="kw-icon" viewBox="0 0 24 24">
+            <path d="M3 6h18M9 6V4h6v2M8 6v14a2 2 0 002 2h4a2 2 0 002-2V6" stroke="#e63e3e" stroke-width="2"
+              fill="none" />
+          </svg>
+          Smazat vybrané
+        </button>
+        <div id="ex-admin-status" style="margin-top:1em;font-size:.97em;color:#1976d2;"></div>
+      </div>
+      <div id="ex-no-results" style="display:none;color:#b00;margin-top:1.5em;font-size:1.12em;text-align:center;">Žádná
+        fráze nenalezena.</div>
     </div>
-    <div id="ex-no-results" style="display:none;color:#b00;margin-top:1.5em;font-size:1.12em;text-align:center;">Žádná fráze nenalezena.</div>
   </div>
-</div>
+  <!-- Modal pro skupiny (pouze URL) -->
+  <div id="groups-modal" class="custom-modal">
+    <div class="modal-content">
+      <button class="close-modal" id="close-groups-modal" title="Zavřít">✕</button>
+      <div class="modal-title">Skupiny</div>
+      <div class="kw-table-container">
+        <input id="group-filter" class="kw-table-filter" type="search" placeholder="Filtrovat skupiny…">
+        <div style="display:flex;gap:8px;margin-bottom:.8em;">
+          <input id="group-url-input" class="kw-table-input" placeholder="Např. 558655264788206.groups.facebook.com">
+          <input id="group-name-input" class="kw-table-input" placeholder="Název skupiny">
+          <button id="group-add-btn" class="kw-icon-btn" title="Přidat">Přidej</button>
+        </div>
+        <div class="kw-table-headrow">
+          <div class="kw-table-cell" style="font-weight:700;">URL skupiny</div>
+          <div class="kw-table-cell" style="font-weight:700;">Název</div>
+          <div class="kw-table-actions" style="font-weight:700;">Akce</div>
+        </div>
+
+
+        <div id="group-table-rows"></div>
+        <div id="group-admin-status" style="margin-top:1em;font-size:.97em;color:#1976d2;"></div>
+      </div>
+      <div id="group-no-results" style="display:none;color:#b00;margin-top:1.5em;font-size:1.12em;text-align:center;">
+        Žádná skupina nenalezena.</div>
+    </div>
+  </div>
 
 
 
   <div id="run-log"></div>
   <div id="posts">Načítám...</div>
-  
+
   <script>
     if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/sw.js').then(function(reg) {
-      // console.log('SW registered', reg);
-    });
-  });
-}
- 
- 
-function subscribeUserToPush() {
-  if (!('serviceWorker' in navigator)) return;
-  navigator.serviceWorker.ready.then(reg => {
-    Notification.requestPermission().then(permission => {
-      if (permission !== 'granted') return alert('Notifikace zakázány');
-      reg.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: '<TVŮJ PUBLIC VAPID KLÍČ base64>'
-      }).then(sub => {
-        // Ulož sub na server (např. do Firebase nebo vlastní API)
-        // fetch('/api/save-sub', {method:'POST',body:JSON.stringify(sub),headers:{'Content-Type':'application/json'}});
-        alert('Notifikace povoleny!');
-      }).catch(console.error);
-    });
-  });
-}
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('/sw.js').then(function (reg) {
+          // console.log('SW registered', reg);
+        });
+      });
+    }
+    // === SKUPINY (pouze URL) ===
 
-function showModal(id, fetchFn) {
+    const GROUPS_FIREBASE_URL = "https://poptavky-59312-default-rtdb.europe-west1.firebasedatabase.app/groups.json";
+    let groupData = [];
+    let groupEditingIndex = null;
+
+    function groupStatus(msg, err) {
+      const el = document.getElementById("group-admin-status");
+      el.style.color = err ? "#e63e3e" : "#1976d2";
+      el.textContent = msg;
+      setTimeout(() => { el.textContent = ""; }, 1800);
+    }
+
+    function groupLoadTable() {
+      fetch(GROUPS_FIREBASE_URL).then(r => r.json()).then(arr => {
+        if (!Array.isArray(arr)) arr = [];
+        groupData = arr;
+        groupEditingIndex = null;
+        groupRenderTable();
+      });
+    }
+
+    function groupRenderTable() {
+      const rows = document.getElementById("group-table-rows");
+      const filterVal = document.getElementById("group-filter").value.trim().toLowerCase();
+      let data = groupData
+        .map((g, i) => ({ ...g, i }))
+        .filter(obj => !filterVal ||
+          obj.id.toLowerCase().includes(filterVal) ||
+          obj.name.toLowerCase().includes(filterVal)
+        );
+      let html = data.map(({ id, name, i }) => `
+    <div class="kw-table-row${groupEditingIndex === i ? " editing" : ""}">
+      <div class="kw-table-cell">
+        ${groupEditingIndex === i
+          ? `<input class="kw-table-input" id="group-edit-url-input" value="${id.replace(/"/g, '&quot;')}">`
+          : `<a href="https://${id}" target="_blank">${id}</a>`
+        }
+      </div>
+      <div class="kw-table-cell">
+        ${groupEditingIndex === i
+          ? `<input class="kw-table-input" id="group-edit-name-input" value="${name.replace(/"/g, '&quot;')}">`
+          : `<span>${name}</span>`
+        }
+      </div>
+      <div class="kw-table-actions-vertical">
+        ${groupEditingIndex === i
+          ? `
+            <button class="kw-icon-btn" title="Uložit" data-action="save" data-i="${i}">
+              <svg class="kw-icon" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#1c932c" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
+            </button>
+            <button class="kw-icon-btn" title="Zrušit" data-action="cancel" data-i="${i}">
+              <svg class="kw-icon" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke="#b3b3b3" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+            </button>
+          `
+          : `
+            <button class="kw-icon-btn" title="Upravit" data-action="edit" data-i="${i}">
+              <svg class="kw-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z" /></svg>
+            </button>
+            <button class="kw-icon-btn" title="Smazat" data-action="delete" data-i="${i}">
+              <svg class="kw-icon" viewBox="0 0 24 24"><path d="M6 19a2 2 0 002 2h8a2 2 0 002-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" fill="#e63e3e"/></svg>
+            </button>
+          `
+        }
+      </div>
+    </div>
+  `).join("");
+      rows.innerHTML = html;
+      document.getElementById("group-no-results").style.display = data.length ? "none" : "";
+    }
+
+
+    document.getElementById("group-add-btn").onclick = function () {
+      let id = document.getElementById("group-url-input").value.trim().replace(/^https?:\/\//, "");
+      let name = document.getElementById("group-name-input").value.trim();
+      if (!id || !name) return groupStatus("Zadej URL i název!", true);
+      if (groupData.some(g => g.id === id)) return groupStatus("Skupina už existuje!", true);
+      groupData.push({ id, name });
+      groupSaveAll("Skupina přidána.");
+      document.getElementById("group-url-input").value = "";
+      document.getElementById("group-name-input").value = "";
+    };
+
+    // Inline editace, mazání, uložení, cancel
+    document.getElementById("group-table-rows").onclick = function (e) {
+      const btn = e.target.closest("button.kw-icon-btn");
+      if (!btn) return;
+      const idx = parseInt(btn.dataset.i);
+      const action = btn.dataset.action;
+      if (action === "edit") {
+        groupEditingIndex = idx; groupRenderTable();
+        setTimeout(() => { document.getElementById("group-edit-url-input").focus(); }, 50);
+      }
+      if (action === "delete") {
+        if (confirm("Opravdu smazat tuto skupinu?")) {
+          groupData.splice(idx, 1);
+          groupSaveAll("Skupina smazána.");
+        }
+      }
+      if (action === "save") {
+        const id = document.getElementById("group-edit-url-input").value.trim().replace(/^https?:\/\//, "");
+        const name = document.getElementById("group-edit-name-input").value.trim();
+        if (!id || !name) return groupStatus("Zadej URL i název!", true);
+        if (groupData.some((g, i2) => g.id === id && i2 !== idx)) return groupStatus("Skupina už existuje!", true);
+        groupData[idx] = { id, name };
+        groupEditingIndex = null;
+        groupSaveAll("Skupina upravena.");
+      }
+      if (action === "cancel") {
+        groupEditingIndex = null; groupRenderTable();
+      }
+    };
+    // Enter při editaci
+    document.getElementById("group-table-rows").addEventListener("keydown", function (e) {
+      if (e.target.id === "group-edit-url-input" && e.key === "Enter") {
+        document.querySelector('#group-table-rows [data-action="save"]').click();
+      }
+    });
+
+    // Filtrování
+    document.getElementById("group-filter").oninput = function () {
+      groupRenderTable();
+    };
+
+    // Uložit vše do Firebase
+    function groupSaveAll(msg) {
+      fetch(GROUPS_FIREBASE_URL, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(groupData)
+      }).then(() => { groupStatus(msg); groupRenderTable(); });
+    }
+
+    // Otevřít modal
+    function showGroupsModal() {
+      document.getElementById("groups-modal").style.display = "flex";
+      groupLoadTable();
+    }
+    document.getElementById("show-groups-btn").onclick = showGroupsModal;
+    document.getElementById("close-groups-modal").onclick = () => hideModal("groups-modal");
+
+
+    function subscribeUserToPush() {
+      if (!('serviceWorker' in navigator)) return;
+      navigator.serviceWorker.ready.then(reg => {
+        Notification.requestPermission().then(permission => {
+          if (permission !== 'granted') return alert('Notifikace zakázány');
+          reg.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: '<TVŮJ PUBLIC VAPID KLÍČ base64>'
+          }).then(sub => {
+            // Ulož sub na server (např. do Firebase nebo vlastní API)
+            // fetch('/api/save-sub', {method:'POST',body:JSON.stringify(sub),headers:{'Content-Type':'application/json'}});
+            alert('Notifikace povoleny!');
+          }).catch(console.error);
+        });
+      });
+    }
+
+    function showModal(id, fetchFn) {
       document.getElementById(id).style.display = "flex";
       if (fetchFn) fetchFn();
     }
@@ -953,12 +1138,12 @@ function showModal(id, fetchFn) {
       showModal("keywords-modal", kwRenderTable);
     document.getElementById("close-keywords-modal").onclick = () =>
       hideModal("keywords-modal");
-  
+
     // Zavírání esc a klik vedle modalu
     window.addEventListener('keydown', e => {
       if (e.key === 'Escape') {
         hideModal("keywords-modal");
-       }
+      }
     });
     document.querySelectorAll('.custom-modal').forEach(modal => {
       modal.addEventListener('click', e => {
@@ -1024,16 +1209,14 @@ function showModal(id, fetchFn) {
   <div class="kw-table-row${editingIndex === i ? " editing" : ""}">
     <input type="checkbox" class="kw-table-select" data-i="${i}">
     <div class="kw-table-cell" style="display:flex;align-items:center;gap:8px;">
-      ${
-        editingIndex === i
+      ${editingIndex === i
           ? `<input class="kw-table-input" id="kw-edit-input" value="${w.replace(/"/g, '&quot;')}">`
           : `<span>${w}</span>`
-      }
+        }
     </div>
     <div class="kw-table-actions-vertical">
-      ${
-        editingIndex === i
-        ? `
+      ${editingIndex === i
+          ? `
           <button class="kw-icon-btn" title="Uložit" data-action="save" data-i="${i}">
             <svg class="kw-icon" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#1c932c" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
           </button>
@@ -1041,7 +1224,7 @@ function showModal(id, fetchFn) {
             <svg class="kw-icon" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke="#b3b3b3" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
           </button>
         `
-        : `
+          : `
           <button class="kw-icon-btn" title="Upravit" data-action="edit" data-i="${i}">
             <svg class="kw-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z" /></svg>
           </button>
@@ -1049,12 +1232,12 @@ function showModal(id, fetchFn) {
             <svg class="kw-icon" viewBox="0 0 24 24"><path d="M6 19a2 2 0 002 2h8a2 2 0 002-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" fill="#e63e3e"/></svg>
           </button>
         `
-      }
+        }
     </div>
     <div class="kw-table-cell" style="min-width:42px;text-align:right;">${count || 0}</div>
   </div>
 `).join("");
-rows.innerHTML = html;
+      rows.innerHTML = html;
 
       let selCount = document.querySelectorAll('.kw-table-select:checked').length;
       bulkBtn.style.display = selCount ? "" : "none";
@@ -1083,7 +1266,7 @@ rows.innerHTML = html;
       }
       if (action === "delete") {
         kwData.splice(idx, 1);
-         kwSaveAll("Slovo smazáno.");
+        kwSaveAll("Slovo smazáno.");
         /*if (confirm("Opravdu smazat toto slovo?")) {
           
          
@@ -1171,72 +1354,70 @@ rows.innerHTML = html;
     // INIT
     kwLoadTable();
 
-   const EX_FIREBASE_URL = "https://poptavky-59312-default-rtdb.europe-west1.firebasedatabase.app/excluded.json";
-const EX_STATS_URL = "https://poptavky-59312-default-rtdb.europe-west1.firebasedatabase.app/exstats.json";
-let exData = [];
-let exStats = {};
-let exEditingIndex = null;
-let exSortAsc = true;
-let exSortByCount = false;
+    const EX_FIREBASE_URL = "https://poptavky-59312-default-rtdb.europe-west1.firebasedatabase.app/excluded.json";
+    const EX_STATS_URL = "https://poptavky-59312-default-rtdb.europe-west1.firebasedatabase.app/exstats.json";
+    let exData = [];
+    let exStats = {};
+    let exEditingIndex = null;
+    let exSortAsc = true;
+    let exSortByCount = false;
 
-function exStatus(msg, err) {
-  const el = document.getElementById("ex-admin-status");
-  el.style.color = err ? "#e63e3e" : "#1976d2";
-  el.textContent = msg;
-  setTimeout(() => { el.textContent = ""; }, 1800);
-}
+    function exStatus(msg, err) {
+      const el = document.getElementById("ex-admin-status");
+      el.style.color = err ? "#e63e3e" : "#1976d2";
+      el.textContent = msg;
+      setTimeout(() => { el.textContent = ""; }, 1800);
+    }
 
-function exLoadStats(cb) {
-  fetch(EX_STATS_URL).then(r => r.json()).then(obj => {
-    exStats = obj || {};
-    if (cb) cb();
-  });
-}
+    function exLoadStats(cb) {
+      fetch(EX_STATS_URL).then(r => r.json()).then(obj => {
+        exStats = obj || {};
+        if (cb) cb();
+      });
+    }
 
-function exLoadTable() {
-  fetch(EX_FIREBASE_URL).then(r => r.json()).then(arr => {
-    if (!Array.isArray(arr)) arr = [];
-    exData = arr;
-    exEditingIndex = null;
-    exLoadStats(exRenderTable); // nejdřív načti stats a pak renderuj
-  });
-}
+    function exLoadTable() {
+      fetch(EX_FIREBASE_URL).then(r => r.json()).then(arr => {
+        if (!Array.isArray(arr)) arr = [];
+        exData = arr;
+        exEditingIndex = null;
+        exLoadStats(exRenderTable); // nejdřív načti stats a pak renderuj
+      });
+    }
 
-function exRenderTable() {
-  const rows = document.getElementById("ex-table-rows");
-  const bulkBtn = document.getElementById("ex-bulk-delete-btn");
-  const filterVal = document.getElementById("ex-filter").value.trim().toLowerCase();
+    function exRenderTable() {
+      const rows = document.getElementById("ex-table-rows");
+      const bulkBtn = document.getElementById("ex-bulk-delete-btn");
+      const filterVal = document.getElementById("ex-filter").value.trim().toLowerCase();
 
-  let data = exData.map((w, i) => ({
-    w,
-    i,
-    count: (exStats && typeof exStats[w] !== "undefined") ? exStats[w] : 0
-  }))
-    .filter(obj => !filterVal || obj.w.toLowerCase().includes(filterVal));
+      let data = exData.map((w, i) => ({
+        w,
+        i,
+        count: (exStats && typeof exStats[w] !== "undefined") ? exStats[w] : 0
+      }))
+        .filter(obj => !filterVal || obj.w.toLowerCase().includes(filterVal));
 
-  // --- Řazení ---
-  if (exSortByCount) {
-    data = data.sort((a, b) => exSortAsc ? (a.count - b.count) : (b.count - a.count));
-  } else {
-    data = data.sort((a, b) => {
-      const cmp = a.w.localeCompare(b.w, "cs", { sensitivity: "base" });
-      return exSortAsc ? cmp : -cmp;
-    });
-  }
+      // --- Řazení ---
+      if (exSortByCount) {
+        data = data.sort((a, b) => exSortAsc ? (a.count - b.count) : (b.count - a.count));
+      } else {
+        data = data.sort((a, b) => {
+          const cmp = a.w.localeCompare(b.w, "cs", { sensitivity: "base" });
+          return exSortAsc ? cmp : -cmp;
+        });
+      }
 
-  let html = data.map(({ w, i, count }) => `
+      let html = data.map(({ w, i, count }) => `
     <div class="kw-table-row${exEditingIndex === i ? " editing" : ""}">
       <input type="checkbox" class="kw-table-select" data-i="${i}">
       <div class="kw-table-cell" style="display:flex;align-items:center;gap:8px;">
-        ${
-          exEditingIndex === i
-            ? `<input class="kw-table-input" id="ex-edit-input" value="${w.replace(/"/g, '&quot;')}">`
-            : `<span>${w}</span>`
+        ${exEditingIndex === i
+          ? `<input class="kw-table-input" id="ex-edit-input" value="${w.replace(/"/g, '&quot;')}">`
+          : `<span>${w}</span>`
         }
       </div>
       <div class="kw-table-actions-vertical">
-        ${
-          exEditingIndex === i
+        ${exEditingIndex === i
           ? `
             <button class="kw-icon-btn" title="Uložit" data-action="save" data-i="${i}">
               <svg class="kw-icon" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="#1c932c" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
@@ -1258,118 +1439,118 @@ function exRenderTable() {
       <div class="kw-table-cell" style="min-width:42px;text-align:right;">${count || 0}</div>
     </div>
   `).join("");
-  rows.innerHTML = html;
+      rows.innerHTML = html;
 
-  let selCount = document.querySelectorAll('#ex-table-rows .kw-table-select:checked').length;
-  bulkBtn.style.display = selCount ? "" : "none";
-}
-
-// Přidat novou frázi
-document.getElementById("ex-add-btn").onclick = function () {
-  let val = document.getElementById("ex-add-input").value.trim();
-  if (!val) return;
-  if (exData.includes(val)) return exStatus("Tato fráze už existuje!", true);
-  exData.push(val);
-  exSaveAll("Fráze přidána.");
-  document.getElementById("ex-add-input").value = "";
-};
-
-// Inline editace, mazání, uložení, cancel, bulk delete
-document.getElementById("ex-table-rows").onclick = function (e) {
-  const btn = e.target.closest("button.kw-icon-btn");
-  if (!btn) return;
-  const idx = parseInt(btn.dataset.i);
-  const action = btn.dataset.action;
-  if (action === "edit") {
-    exEditingIndex = idx; exRenderTable();
-    setTimeout(() => { document.getElementById("ex-edit-input").focus(); }, 50);
-  }
-  if (action === "delete") {
-    if (confirm("Opravdu smazat tuto frázi?")) {
-      exData.splice(idx, 1);
-      exSaveAll("Fráze smazána.");
+      let selCount = document.querySelectorAll('#ex-table-rows .kw-table-select:checked').length;
+      bulkBtn.style.display = selCount ? "" : "none";
     }
-  }
-  if (action === "save") {
-    const val = document.getElementById("ex-edit-input").value.trim();
-    if (!val) return;
-    if (exData.includes(val)) return exStatus("Tato fráze už existuje!", true);
-    exData[idx] = val;
-    exEditingIndex = null;
-    exSaveAll("Fráze upravena.");
-  }
-  if (action === "cancel") {
-    exEditingIndex = null; exRenderTable();
-  }
-};
-// Enter při editaci
-document.getElementById("ex-table-rows").addEventListener("keydown", function (e) {
-  if (e.target.id === "ex-edit-input" && e.key === "Enter") {
-    document.querySelector('#ex-table-rows [data-action="save"]').click();
-  }
-});
 
-// Řazení klikem na záhlaví
-document.getElementById("ex-sort-th").onclick = function () {
-  if (!exSortByCount) {
-    exSortAsc = !exSortAsc;
-  } else {
-    exSortByCount = false;
-    exSortAsc = true;
-  }
-  document.getElementById("ex-sort-arrow").textContent = exSortAsc ? "↑" : "↓";
-  document.getElementById("ex-sort-count-arrow").textContent = "";
-  exRenderTable();
-};
-// Řazení dle výskytů
-document.getElementById("ex-sort-count-th").onclick = function () {
-  if (exSortByCount) {
-    exSortAsc = !exSortAsc;
-  } else {
-    exSortByCount = true;
-    exSortAsc = false;
-  }
-  document.getElementById("ex-sort-count-arrow").textContent = exSortAsc ? "↑" : "↓";
-  document.getElementById("ex-sort-arrow").textContent = "";
-  exRenderTable();
-};
+    // Přidat novou frázi
+    document.getElementById("ex-add-btn").onclick = function () {
+      let val = document.getElementById("ex-add-input").value.trim();
+      if (!val) return;
+      if (exData.includes(val)) return exStatus("Tato fráze už existuje!", true);
+      exData.push(val);
+      exSaveAll("Fráze přidána.");
+      document.getElementById("ex-add-input").value = "";
+    };
 
-// Filtrování
-document.getElementById("ex-filter").oninput = function () {
-  exRenderTable();
-};
+    // Inline editace, mazání, uložení, cancel, bulk delete
+    document.getElementById("ex-table-rows").onclick = function (e) {
+      const btn = e.target.closest("button.kw-icon-btn");
+      if (!btn) return;
+      const idx = parseInt(btn.dataset.i);
+      const action = btn.dataset.action;
+      if (action === "edit") {
+        exEditingIndex = idx; exRenderTable();
+        setTimeout(() => { document.getElementById("ex-edit-input").focus(); }, 50);
+      }
+      if (action === "delete") {
+        if (confirm("Opravdu smazat tuto frázi?")) {
+          exData.splice(idx, 1);
+          exSaveAll("Fráze smazána.");
+        }
+      }
+      if (action === "save") {
+        const val = document.getElementById("ex-edit-input").value.trim();
+        if (!val) return;
+        if (exData.includes(val)) return exStatus("Tato fráze už existuje!", true);
+        exData[idx] = val;
+        exEditingIndex = null;
+        exSaveAll("Fráze upravena.");
+      }
+      if (action === "cancel") {
+        exEditingIndex = null; exRenderTable();
+      }
+    };
+    // Enter při editaci
+    document.getElementById("ex-table-rows").addEventListener("keydown", function (e) {
+      if (e.target.id === "ex-edit-input" && e.key === "Enter") {
+        document.querySelector('#ex-table-rows [data-action="save"]').click();
+      }
+    });
 
-// Výběr všech pro bulk
-document.getElementById("ex-bulk-select").onchange = function () {
-  document.querySelectorAll('#ex-table-rows .kw-table-select').forEach(cb => cb.checked = this.checked);
-  document.getElementById('ex-bulk-delete-btn').style.display = this.checked ? "" : "none";
-};
+    // Řazení klikem na záhlaví
+    document.getElementById("ex-sort-th").onclick = function () {
+      if (!exSortByCount) {
+        exSortAsc = !exSortAsc;
+      } else {
+        exSortByCount = false;
+        exSortAsc = true;
+      }
+      document.getElementById("ex-sort-arrow").textContent = exSortAsc ? "↑" : "↓";
+      document.getElementById("ex-sort-count-arrow").textContent = "";
+      exRenderTable();
+    };
+    // Řazení dle výskytů
+    document.getElementById("ex-sort-count-th").onclick = function () {
+      if (exSortByCount) {
+        exSortAsc = !exSortAsc;
+      } else {
+        exSortByCount = true;
+        exSortAsc = false;
+      }
+      document.getElementById("ex-sort-count-arrow").textContent = exSortAsc ? "↑" : "↓";
+      document.getElementById("ex-sort-arrow").textContent = "";
+      exRenderTable();
+    };
 
-// Bulk mazání
-document.getElementById("ex-bulk-delete-btn").onclick = function () {
-  if (!confirm("Opravdu smazat vybrané fráze?")) return;
-  let sel = Array.from(document.querySelectorAll('#ex-table-rows .kw-table-select:checked')).map(cb => parseInt(cb.dataset.i));
-  exData = exData.filter((_, i) => !sel.includes(i));
-  exSaveAll("Fráze smazány.");
-  document.getElementById("ex-bulk-select").checked = false;
-};
+    // Filtrování
+    document.getElementById("ex-filter").oninput = function () {
+      exRenderTable();
+    };
 
-// Uložit vše do Firebase
-function exSaveAll(msg) {
-  fetch(EX_FIREBASE_URL, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(exData)
-  }).then(() => { exStatus(msg); exRenderTable(); });
-}
+    // Výběr všech pro bulk
+    document.getElementById("ex-bulk-select").onchange = function () {
+      document.querySelectorAll('#ex-table-rows .kw-table-select').forEach(cb => cb.checked = this.checked);
+      document.getElementById('ex-bulk-delete-btn').style.display = this.checked ? "" : "none";
+    };
 
-// INIT po otevření modalu
-function exShowModal() {
-  document.getElementById("excluded-modal").style.display = "flex";
-  exLoadTable();
-}
-document.getElementById("show-excluded-btn").onclick = exShowModal;
-document.getElementById("close-excluded-modal").onclick = () => hideModal("excluded-modal");
+    // Bulk mazání
+    document.getElementById("ex-bulk-delete-btn").onclick = function () {
+      if (!confirm("Opravdu smazat vybrané fráze?")) return;
+      let sel = Array.from(document.querySelectorAll('#ex-table-rows .kw-table-select:checked')).map(cb => parseInt(cb.dataset.i));
+      exData = exData.filter((_, i) => !sel.includes(i));
+      exSaveAll("Fráze smazány.");
+      document.getElementById("ex-bulk-select").checked = false;
+    };
+
+    // Uložit vše do Firebase
+    function exSaveAll(msg) {
+      fetch(EX_FIREBASE_URL, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(exData)
+      }).then(() => { exStatus(msg); exRenderTable(); });
+    }
+
+    // INIT po otevření modalu
+    function exShowModal() {
+      document.getElementById("excluded-modal").style.display = "flex";
+      exLoadTable();
+    }
+    document.getElementById("show-excluded-btn").onclick = exShowModal;
+    document.getElementById("close-excluded-modal").onclick = () => hideModal("excluded-modal");
 
 
     const FIREBASE_URL = "https://poptavky-59312-default-rtdb.europe-west1.firebasedatabase.app/poptavky.json";
@@ -1379,12 +1560,19 @@ document.getElementById("close-excluded-modal").onclick = () => hideModal("exclu
       CURRENT_BRANCH = branch;
       const FIREBASE_URL = `https://poptavky-59312-default-rtdb.europe-west1.firebasedatabase.app/${branch}.json`;
       document.getElementById('posts').innerHTML = "Načítám...";
-      fetch(FIREBASE_URL)
+      // Nejprve načti skupiny, pak teprve příspěvky:
+      fetch(GROUPS_FIREBASE_URL)
+        .then(r => r.json())
+        .then(arr => {
+          groupData = Array.isArray(arr) ? arr : [];
+          return fetch(FIREBASE_URL);
+        })
         .then(resp => resp.json())
         .then(data => renderPosts(data))
         .catch(() => {
           document.getElementById('posts').innerHTML = '<div style="color:#f55;font-weight:bold">Chyba při načítání dat</div>';
         });
+
     }
 
     // Aktivace tabů
@@ -1487,144 +1675,155 @@ document.getElementById("close-excluded-modal").onclick = () => hideModal("exclu
     switchTab("poptavky");
 
 
-   function renderPosts(data) {
-  const container = document.getElementById('posts');
-  if (!data) {
-    container.innerHTML = '<div style="color:#999">Žádné příspěvky...</div>';
-    return;
-  }
-  const timelineColors = [
-    '#1976d2', '#e96458', '#27b36a', '#e4a600', '#9562e6'
-  ];
-  const items = Object.entries(data)
-    .map(([id, post]) => ({ ...post, _id: id }))
-    .map(post => {
-      let dt = extractPostDate(post.text || "");
-      post._dateObj = dt;
-      post._dateStr = dt
-        ? dt.toLocaleDateString('cs-CZ', { year: 'numeric', month: '2-digit', day: '2-digit' })
-        : 'Neznámé datum';
-      return post;
-    })
-    .sort((a, b) => {
-      if (!a._dateObj && !b._dateObj) return 0;
-      if (!a._dateObj) return 1;
-      if (!b._dateObj) return -1;
-      return b._dateObj - a._dateObj;
-    });
+    function renderPosts(data) {
+      const container = document.getElementById('posts');
+      if (!data) {
+        container.innerHTML = '<div style="color:#999">Žádné příspěvky...</div>';
+        return;
+      }
+      const timelineColors = [
+        '#1976d2', '#e96458', '#27b36a', '#e4a600', '#9562e6'
+      ];
+      const items = Object.entries(data)
+        .map(([id, post]) => ({ ...post, _id: id }))
+        .map(post => {
+          let dt = extractPostDate(post.text || "");
+          post._dateObj = dt;
+          post._dateStr = dt
+            ? dt.toLocaleDateString('cs-CZ', { year: 'numeric', month: '2-digit', day: '2-digit' })
+            : 'Neznámé datum';
+          return post;
+        })
+        .sort((a, b) => {
+          if (!a._dateObj && !b._dateObj) return 0;
+          if (!a._dateObj) return 1;
+          if (!b._dateObj) return -1;
+          return b._dateObj - a._dateObj;
+        });
 
-  let days = {};
-  for (const post of items) {
-    const key = post._dateStr;
-    if (!days[key]) days[key] = [];
-    days[key].push(post);
-  }
-  let html = '';
-  let colorIdx = 0;
+      let days = {};
+      for (const post of items) {
+        const key = post._dateStr;
+        if (!days[key]) days[key] = [];
+        days[key].push(post);
+      }
+      let html = '';
+      let colorIdx = 0;
 
-  for (const day of Object.keys(days)) {
-    const color = timelineColors[colorIdx % timelineColors.length];
+      for (const day of Object.keys(days)) {
+        const color = timelineColors[colorIdx % timelineColors.length];
 
-    let timelineHtml = `<div class="timeline" style="--primary:${color};">
+        let timelineHtml = `<div class="timeline" style="--primary:${color};">
       <div class="timeline-line"></div>
       <div class="timeline-dot"></div>
     </div>`;
 
-    let cardsHtml = `<div class="cards-day">    `;
-    for (const post of days[day]) {
-      let realDate = post._dateObj;
-      let showTime = extractOnlyTime(realDate);
+        let cardsHtml = `<div class="cards-day">    `;
+        for (const post of days[day]) {
+          let realDate = post._dateObj;
+          let showTime = extractOnlyTime(realDate);
+          const groupName = (groupData.find(g => g.id === post.groupId) || {}).name || post.groupId || "Neznámá skupina";
+          const group = groupData.find(g => g.id === post.groupId);
+          // Paleta, můžeš změnit nebo rozšířit!
+          const groupColors = ['#1976d2', '#e96458', '#27b36a', '#e4a600', '#9562e6', '#b88138', '#e04e9f', '#18808b', '#888', '#2196F3', '#FF5722'];
+          // Index skupiny v groupData (podle pořadí přidaní)
+          const groupIdx = groupData.findIndex(g => g.id === post.groupId);
+          const groupColor = groupColors[groupIdx % groupColors.length];
+          // Fajfka stav
+          const isChecked = !!post.checkedTime;
+          const checkedClass = isChecked ? "checked" : "";
+          const checkedTimeStr = isChecked
+            ? new Date(post.checkedTime).toLocaleString('cs-CZ', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+            : "";
 
-      // Fajfka stav
-      const isChecked = !!post.checkedTime;
-      const checkedClass = isChecked ? "checked" : "";
-      const checkedTimeStr = isChecked
-        ? new Date(post.checkedTime).toLocaleString('cs-CZ', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })
-        : "";
-
-      cardsHtml += `
+          cardsHtml += `
       <div class="card" id="post_${post._id}">
         <div class="card-header">
           <div class="card-time">${showTime}</div>
           <span class="material-icons profil" title="Profil">person</span>
+          
           ${post.userUrl
-            ? `<a href="${post.userUrl}" target="_blank" class="user-link" title="${post.author || "Neznámý"}">${post.author || "Neznámý"}</a>`
-            : `<span class="user-link" style="color:#aaa;pointer-events:none;" title="${post.author || "Neznámý"}">${post.author || "Neznámý"}</span>`
-          }
+              ? `<a href="${post.userUrl}" target="_blank" class="user-link" title="${post.author || "Neznámý"}">${post.author || "Neznámý"}</a>`
+              : `<span class="user-link" style="color:#aaa;pointer-events:none;" title="${post.author || "Neznámý"}">${post.author || "Neznámý"}</span>`
+            }
           <a href="${post.url}" target="_blank" class="post-link" title="Otevřít příspěvek">
             <span class="material-icons openinnew">open_in_new</span>
           </a>
+          
         </div>
         <div class="card-body">${extractCleanText(post.text || "")}</div>
         ${(post.matchedKeyword || post.matchedExcluded) ? `
         <div class="chips-box" style="margin-bottom:7px;">
           ${post.matchedKeyword ? `<span class="kw-chip" title="Toto klíčové slovo rozhodlo o zařazení">${post.matchedKeyword}</span>` : ""}
           ${post.matchedExcluded ? `<span class="ex-chip" title="Tato fráze rozhodla o zařazení">${post.matchedExcluded}</span>` : ""}
-        </div>
-        ` : ""}
-        <button class="checkmark-btn ${checkedClass}" id="chk_${post._id}" title="${isChecked ? `Označeno: ${checkedTimeStr}\nKlikni pro zrušení` : 'Označit jako vyřízené'}">
+            <span class="material-icons" style="color:${groupColor};" title="${group ? group.name : post.groupId}">groups</span>
+            <button class="checkmark-btn ${checkedClass}" id="chk_${post._id}" title="${isChecked ? `Označeno: ${checkedTimeStr}\nKlikni pro zrušení` : 'Označit jako vyřízené'}">
           <span class="material-icons">done</span>
         </button>
+        </div>
+        ` : ""}
+        
+      
       </div>
       `;
-    }
-    cardsHtml += '</div>';
+        }
+        cardsHtml += '</div>';
 
-    html += ` <span class="timeline-date    "  style="--primary:${color};--primary-dark:${color};">${day}</span> 
+        html += ` <span class="timeline-date    "  style="--primary:${color};--primary-dark:${color};">${day}</span> 
     <div class="day-row" style="--primary:${color};--primary-dark:${color};">
       ${timelineHtml}
       ${cardsHtml}
     </div>
   `;
-    colorIdx++;
-  }
+        colorIdx++;
+      }
 
-  container.innerHTML = html;
+      container.innerHTML = html;
 
-  // Nastavit funkci na fajfku na všech kartách
-  for (const day of Object.keys(days)) {
-    for (const post of days[day]) {
-      const btn = document.getElementById(`chk_${post._id}`);
-      if (!btn) continue;
-      btn.onclick = function () {
-        const isNowChecked = !btn.classList.contains('checked');
-        let checkedTime = isNowChecked ? new Date().toISOString() : null;
+      // Nastavit funkci na fajfku na všech kartách
+      for (const day of Object.keys(days)) {
+        for (const post of days[day]) {
+          const btn = document.getElementById(`chk_${post._id}`);
+          if (!btn) continue;
+          btn.onclick = function () {
+            const isNowChecked = !btn.classList.contains('checked');
+            let checkedTime = isNowChecked ? new Date().toISOString() : null;
 
-        // Ulož do Firebase, použij aktuální branch!
-        fetch(`https://poptavky-59312-default-rtdb.europe-west1.firebasedatabase.app/${CURRENT_BRANCH}/${post._id}/checkedTime.json`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(checkedTime)
-        }).then(() => {
-          // Po uložení refreshni pouze fajfku
-          btn.classList.toggle('checked', isNowChecked);
-          if (isNowChecked) {
-            btn.title = `Označeno: ${new Date(checkedTime).toLocaleString('cs-CZ', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}\nKlikni pro zrušení`;
-          } else {
-            btn.title = "Označit jako vyřízené";
+            // Ulož do Firebase, použij aktuální branch!
+            fetch(`https://poptavky-59312-default-rtdb.europe-west1.firebasedatabase.app/${CURRENT_BRANCH}/${post._id}/checkedTime.json`, {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(checkedTime)
+            }).then(() => {
+              // Po uložení refreshni pouze fajfku
+              btn.classList.toggle('checked', isNowChecked);
+              if (isNowChecked) {
+                btn.title = `Označeno: ${new Date(checkedTime).toLocaleString('cs-CZ', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}\nKlikni pro zrušení`;
+              } else {
+                btn.title = "Označit jako vyřízené";
+              }
+            });
           }
-        });
+        }
       }
     }
-  }
-}
 
-let deferredPrompt;
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  // zobrazit tlačítko uživateli:
-  const btn = document.createElement('button');
-  btn.textContent = 'Přidat aplikaci na plochu';
-  btn.className = 'filter-btn';
-  btn.onclick = () => {
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then((choiceResult) => {
-      btn.remove();
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      // zobrazit tlačítko uživateli:
+      const btn = document.createElement('button');
+      btn.textContent = 'Přidat aplikaci na plochu';
+      btn.className = 'filter-btn';
+      btn.onclick = () => {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          btn.remove();
+        });
+      };
+      document.body.appendChild(btn);
     });
-  };
-  document.body.appendChild(btn);
-});
 
   </script>
 </body>
